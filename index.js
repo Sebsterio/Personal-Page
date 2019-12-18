@@ -20,9 +20,43 @@ const JS30projects = JS30folders.map(folder => ({
 }));
 
 const content = document.getElementById("content");
+const list = document.getElementById("list");
 
+// populate #list with links and #content with iframes
 JS30projects.forEach(project => {
-	const link = document.createElement("p");
-	link.innerHTML = `<a href=${project.url}>${project.name}</a>`;
-	content.appendChild(link);
+	const link = document.createElement("div");
+	link.innerHTML = `<li><a href=${project.url}>${project.name}</a></li>`;
+	list.appendChild(link);
+
+	const tile = document.createElement("div");
+	tile.innerHTML = `<div class="tile"><iframe src="${project.url}" frameborder="0"></iframe>
+	<div class="overlay"><p>${project.name}</p></div></div>`;
+	content.appendChild(tile);
+});
+
+// iframe overlays fade out on hover
+
+const tiles = document.querySelectorAll(".tile");
+
+tiles.forEach(tile => {
+	// on .tile hover, fade out .tile-overlay bg
+	tile.addEventListener("mouseenter", () => {
+		const overlay = tile.querySelector(".overlay");
+		overlay.classList.add("hover");
+	});
+	// on .tile mouseleave, move .overlay in front iframe and fade-in
+	tile.addEventListener("mouseleave", () => {
+		const overlay = tile.querySelector(".overlay");
+		overlay.style.zIndex = "initial";
+		overlay.classList.remove("hover");
+	});
+});
+
+window.addEventListener("transitionend", e => {
+	// when .overlay fades out, move it behind iframe
+	if (e.target.classList.contains("overlay") && e.propertyName == "opacity") {
+		if (e.target.classList.contains("hover")) {
+			e.target.style.zIndex = -1;
+		}
+	}
 });

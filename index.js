@@ -2,7 +2,6 @@ const JS30folders = [
 	"01 - JavaScript Drum Kit",
 	"02 - JS and CSS Clock",
 	"03 - CSS Variables",
-	"03 - CSS Variables",
 	"05 - Flex Panel Gallery",
 	"06 - Type Ahead",
 	"08 - Fun with HTML5 Canvas",

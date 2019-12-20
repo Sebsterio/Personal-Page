@@ -1,0 +1,24 @@
+html,
+body,
+.app {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	overscroll-behavior: none;
+}
+
+.app {
+	overflow: hidden;
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+header {
+	flex: 0 0 auto;
+}
+
+main {
+	flex: 1 0 0;
+	position: relative;
+	overflow: hidden;
+}

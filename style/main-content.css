@@ -1,31 +1,31 @@
-ul {
-	padding: 0;
-}
-
-li {
-	font-size: 1em;
-	margin: 20px 0;
-	font-weight: 600;
-	font-family: Segoe UI, Helvetica, Arial, sans-serif;
-	list-style: none;
-}
-
-#content {
+#main-content {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	display: flex;
 	flex-flow: row wrap;
 	text-align: center;
-	display: flex;
-	flex-flow: row rap;
 	justify-content: center;
+
+	overflow: scroll;
+}
+
+/* scroll snap on mobile */
+#main-content.mobile {
+	max-height: 100vh;
+	overflow-y: scroll;
+	scroll-snap-type: mandatory;
+	scroll-snap-type: y mandatory;
+}
+/* temp. TODO: mobile only */
+article {
+	scroll-snap-align: start;
 }
 
 .tile {
 	position: relative;
-}
-
-iframe {
-	/* width: 600;
-	height: 600; */
 }
 
 .overlay {

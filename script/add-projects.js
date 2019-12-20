@@ -1,5 +1,3 @@
-// module enclosed in IIFE to avoid namespace pollution
-
 (function(global) {
 	// add project link to nav
 	function addLink(project, nav) {
@@ -23,7 +21,7 @@
 
 	// add project tile to container
 	function addTile(project, container, { width, height }) {
-		const tile = document.createElement("div");
+		const tile = document.createElement("article");
 		tile.classList.add("tile");
 		// save iframe src to be loaded once all tiles rendered
 		tile.innerHTML = `

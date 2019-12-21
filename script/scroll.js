@@ -14,4 +14,12 @@ function setUpScrollSnap(container) {
 	// on touchstart, blockMenuHeaderScroll = true
 	// on touchend, blockMenuHeaderScroll = false
 	// https://stackoverflow.com/questions/16348031/disable-scrolling-when-touch-moving-certain-element
+
+	// mobile keyboard fix
+
+	const iframes = document.querySelectorAll("iframe");
+	iframes.forEach(iframe => {
+		const input = iframe.querySelector("input");
+		//console.log(input);
+	});
 }

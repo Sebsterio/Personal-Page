@@ -19,7 +19,7 @@
 	scroll-snap-type: mandatory;
 	scroll-snap-type: y mandatory;
 }
-/* temp. TODO: mobile only */
+
 article {
 	scroll-snap-align: start;
 }

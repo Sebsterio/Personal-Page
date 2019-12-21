@@ -35,6 +35,9 @@
 			</iframe>
 			<div class="overlay"><p>${project.name}</p></div>
 		`;
+		//
+		// wide screen only
+		//
 		addHoverInteractions(tile);
 		container.appendChild(tile);
 	}

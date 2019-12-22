@@ -89,7 +89,7 @@ function setUpScroll(tiles, layout, container, fullScreen) {
 		scrollPage(container, tiles, layout, "start");
 	} else {
 		// load iframes visible on page
-		loadUpcomingIframes(tiles, -1, layout.cols, layout.rows);
+		loadUpcomingIframes(tiles, 0, layout.cols, layout.rows);
 	}
 
 	// TODO

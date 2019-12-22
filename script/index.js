@@ -1,5 +1,5 @@
 // minimum tile size for multi-column display
-const TILE_BASE_SIZE = 300;
+const TILE_BASE_SIZE = 500;
 
 function getContainerSize(container) {
 	return {

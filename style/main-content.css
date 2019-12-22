@@ -6,8 +6,6 @@
 	left: 0;
 	display: flex;
 	flex-flow: row wrap;
-	text-align: center;
-	justify-content: center;
 
 	overflow: hidden;
 	transition: all 200ms;
@@ -34,8 +32,11 @@
 	justify-content: center;
 }
 
-.overlay.hover {
+.tile.visible .overlay {
 	opacity: 0;
+}
+.tile.active .overlay {
+	z-index: -1;
 }
 
 .overlay p {

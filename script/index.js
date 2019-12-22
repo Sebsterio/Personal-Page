@@ -1,54 +1,60 @@
-const TILE_BASE_SIZE = 500;
+// minimum tile size for multi-column display
+const TILE_BASE_SIZE = 300;
 
-function getWindowSize() {
+function getContainerSize(container) {
 	return {
-		width:
-			window.innerWidth ||
-			document.documentElement.clientWidth ||
-			document.body.clientWidth,
-		height:
-			window.innerHeight ||
-			document.documentElement.clientHeight ||
-			document.body.clientHeight
+		containerWidth: parseInt(getComputedStyle(container).width),
+		containerHeight: parseInt(getComputedStyle(container).height)
 	};
 }
 
-function checkFullScreen(container, base) {
-	// for overlay fade on hover vs on scroll
-	return container.width < 2 * base && container.height < 2 * base;
+// immitate `flex: 1 0 base` horizontally and vertically
+function getLayout({ containerWidth, containerHeight }, base) {
+	// prevent dividing by 0
+	if (!base) return;
+
+	// get number of rows and columns; minimum 1
+	const cols = Math.floor(containerWidth / base) || 1;
+	const rows = Math.floor(containerHeight / base) || 1;
+
+	return {
+		cols,
+		rows
+	};
 }
 
-// immitate `flex: 1 0 minSize` horizontally and vertically
-function getTileSize(container, base) {
-	// get container width/height
-	let width = parseInt(getComputedStyle(container).width);
-	let height = parseInt(getComputedStyle(container).height);
+function isFullScreen({ cols, rows }) {
+	return cols === 1 && rows === 1;
+}
 
-	// if width/height is a multiple of base, divide to fit within base
-	if (width > base) width = width / Math.floor(width / base);
-	if (height > base) height = height / Math.floor(height / base);
-
-	return { width, height };
+function getTileSize({ containerWidth, containerHeight }, { cols, rows }) {
+	return {
+		width: containerWidth / cols,
+		height: containerHeight / rows
+	};
 }
 
 function loadDoc() {
 	const mainContent = document.getElementById("main-content");
-	const list = document.getElementById("list");
 
-	let isFullScreen = checkFullScreen(mainContent, TILE_BASE_SIZE);
-
-	const tileSize = getTileSize(mainContent, TILE_BASE_SIZE);
+	const containerSize = getContainerSize(mainContent);
+	const layout = getLayout(containerSize, TILE_BASE_SIZE);
+	const fullScreen = isFullScreen(layout);
+	const tileSize = getTileSize(containerSize, layout);
 
 	list.innerHTML = "";
 	mainContent.innerHTML = "";
+
 	// add article with hello and controls info
-	//   desktop: block section
-	//   mobile: 1 tile
-	addProjects(JS30projects, mainContent, list, tileSize);
-	setUpScroll(mainContent, isFullScreen);
+	// renderProjects(getProjects(intro, tileSize, fullScreen = true), mainContent)
+
+	const tiles = getProjects(JS30projects, tileSize, fullScreen); // add-projects.js
+	renderProjects(tiles, mainContent); // add-projects.js
+	setUpOverlays(tiles, fullScreen); // overlay.js
+	setUpScroll(tiles, layout, mainContent, fullScreen); // incl iframe load
 }
 
-// debounce not needed as iframe containers load before their content, so event re-fires before iframe scripts load
+// TODO: debounce iframe content loading
 window.addEventListener("resize", loadDoc);
 
 loadDoc();

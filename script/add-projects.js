@@ -8,7 +8,8 @@ function getTile(project, { width, height }, fullScreen) {
 			data-src="${project.url}" 
 			width="${width}" 
 			height="${height}" 
-			frameborder="0">
+			frameborder="0"
+			>
 				<!-- fallback -->
 				<a href="${project.url}">${project.name}</a>
 			</iframe>

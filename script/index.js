@@ -54,7 +54,7 @@ function loadDoc() {
 	setUpScroll(tiles, layout, mainContent, fullScreen); // incl iframe load
 }
 
-// TODO: debounce iframe content loading
-window.addEventListener("resize", loadDoc);
+// TODO: delay iframe content loading
+window.addEventListener("resize", loadDoc); // includes orientationchange
 
 loadDoc();

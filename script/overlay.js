@@ -1,3 +1,17 @@
+// ON HEADER CLICK
+//toggleOverlays(pages[index], pages[newIndex]);
+// function toggleOverlays(prevPage, newPage) {
+// 	const currentOverlay = prevPage.querySelector(".overlay");
+// 	currentOverlay.style.zIndex = "initial";
+// 	currentOverlay.classList.remove("hover");
+
+// 	//remove overlay from current page
+// 	setTimeout(() => {
+// 		const nextOverlay = newPage.querySelector(".overlay");
+// 		nextOverlay.classList.add("hover");
+// 	}, 500);
+// }
+
 function addHoverInteractions(tile, tiles) {
 	tile.addEventListener("mouseenter", () => {
 		// deactivate all tiles in case of multi col touch event (no mouseleave event)
@@ -5,8 +19,7 @@ function addHoverInteractions(tile, tiles) {
 			tile.classList.remove("active");
 			tile.classList.remove("visible");
 		});
-
-		// activate tile on hover
+		// activate tile hovered over / touched
 		tile.classList.add("visible");
 		// -> transitionend adds class .active
 	});
@@ -18,7 +31,6 @@ function addHoverInteractions(tile, tiles) {
 
 // when .overlay fades out, move it behind iframe
 function handleTransitionEnd(e) {
-	console.log(e.target.parentElement);
 	if (
 		e.target.classList.contains("overlay") &&
 		e.propertyName == "opacity" &&
@@ -40,12 +52,11 @@ function setUpOverlays(tiles, fullScreen) {
 	}
 
 	// in wide screen, tiles start with overlay visible
-	// overlay fades in and out on .tile hover
+	// overlays fade in and out on .tile hover or touch
 	if (!fullScreen) {
 		tiles.forEach(tile => {
 			addHoverInteractions(tile, tiles);
 		});
-
 		window.addEventListener("transitionend", handleTransitionEnd);
 	}
 }

@@ -8,7 +8,7 @@
 	flex-flow: row wrap;
 
 	overflow: hidden;
-	transition: all 200ms;
+	transition: all 400ms;
 }
 
 .tile {

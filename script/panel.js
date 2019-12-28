@@ -13,20 +13,22 @@
 // }
 
 function addHoverInteractions(tile, tiles) {
-	tile.addEventListener("mouseenter", () => {
-		// deactivate all tiles in case of multi col touch event (no mouseleave event)
+	tile.addEventListener("mouseenter", e => {
+		// deactivate all other tiles in case of multi col touch event (no mouseleave event)
 		tiles.forEach(tile => {
-			tile.classList.remove("active");
-			tile.classList.remove("visible");
+			if (tile !== e.target) {
+				tile.classList.remove("active");
+				tile.classList.remove("visible");
+			}
 		});
 		// activate tile hovered over / touched
 		tile.classList.add("visible");
 		// -> transitionend adds class .active
 	});
-	tile.addEventListener("mouseleave", () => {
-		tile.classList.remove("active");
-		tile.classList.remove("visible");
-	});
+	// tile.addEventListener("mouseleave", () => {
+	// 	tile.classList.remove("active");
+	// 	tile.classList.remove("visible");
+	// });
 }
 
 // when .overlay fades out, move it behind iframe
@@ -41,19 +43,8 @@ function handleTransitionEnd(e) {
 	}
 }
 
-function setUpOverlays(tiles, fullScreen) {
-	// all tiles start inactive
-
-	// full screen, tiles start with overlays hidden (tile.visible -> overlay.zIndex = -1)
-	if (fullScreen) {
-		tiles.forEach(tile => {
-			tile.classList.add("visible");
-		});
-	}
-
-	// in wide screen, tiles start with overlay visible
-	// overlays fade in and out on .tile hover or touch
-	if (!fullScreen) {
+function setUpOverlays(tiles, wideLayout) {
+	if (wideLayout) {
 		tiles.forEach(tile => {
 			addHoverInteractions(tile, tiles);
 		});

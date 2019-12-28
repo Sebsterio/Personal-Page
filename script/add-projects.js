@@ -1,34 +1,34 @@
 // add project tile to container
-function getTile(project, { width, height }, fullScreen) {
-	const tile = document.createElement("div");
-	tile.classList.add("tile");
+function getPage(project) {
+	const page = document.createElement("div");
+	page.classList.add("page");
 	// save iframe src to be loaded dynamically on scroll
-	tile.innerHTML = `
+	page.innerHTML = `
 			<iframe src="" 
 			data-src="${project.url}" 
-			width="${width}" 
-			height="${height}" 
+			width="0" 
+			height="0" 
 			frameborder="0"
 			>
 				<!-- fallback -->
 				<a href="${project.url}">${project.name}</a>
 			</iframe>
-			<div class="overlay"}><p>${project.name}</p></div>		
+			<div class="panel"><p>${project.name}</p></div>		
 		`;
 
-	return tile;
+	return page;
 }
 
-// make an array of tiles from a list of projects
-function getProjects(projects, tileSize, fullScreen) {
-	return projects.map(project => {
-		return getTile(project, tileSize, fullScreen);
+// make an array of pages from a list of projects
+function getPages(catalog) {
+	return catalog.map(project => {
+		return getPage(project);
 	});
 }
 
-// append tiles to container
-function renderProjects(tiles, container) {
-	tiles.forEach(tile => {
+// append pages to container
+function renderPages(pages, container) {
+	pages.forEach(tile => {
 		container.appendChild(tile);
 	});
 }

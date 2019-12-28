@@ -1,14 +1,5 @@
-// load all iframes
-// loadIFrames = function(container) {
-// 	const iframes = container.querySelectorAll("iframe");
-// 	iframes.forEach(iframe => {
-// 		iframe.src = iframe.dataset.src;
-// 	});
-// };
-
-function loadUpcomingIframes(tiles, nextIndex, cols, rows) {
-	// select all tiles 1 viewport ahead of newly activated tile
-	for (i = nextIndex; i <= nextIndex + 1 + cols * rows; i++) {
+function loadUpcomingIframes(tiles, fromIndex) {
+	for (i = fromIndex; i <= fromIndex + 2; i++) {
 		const tile = tiles[i];
 		if (!tile) return;
 		const frame = tile.querySelector("iframe");
@@ -18,37 +9,41 @@ function loadUpcomingIframes(tiles, nextIndex, cols, rows) {
 	}
 }
 
-function scrollPage(container, tiles, { cols, rows }, direction) {
-	// get Tile currently in focus
-	const activeTile = container.querySelector(".active");
-	const index = tiles.indexOf(activeTile);
-
-	// determine which tile to scroll to
+function getNextIndex(index, direction, tilesLength) {
 	let nextIndex;
-	let nextTile;
 	switch (direction) {
 		case "start":
 			nextIndex = 0;
 			break;
 		case "next":
-			// get same tile position on next page (1 full page scroll)
-			nextIndex = index + cols * rows;
-			if (nextIndex > tiles.length - 1) nextIndex = tiles.length - 1;
-
+			nextIndex = index + 1;
+			if (nextIndex > tilesLength - 1) nextIndex = tilesLength - 1;
 			break;
 		case "prev":
-			// get same tile position on prev page (1 full page scroll)
-			nextIndex = index - cols * rows;
+			nextIndex = index - 1;
 			if (nextIndex < 0) nextIndex = 0;
 			break;
-		// first/last in array
 		default:
 			new Error("unknown scroll direction parameter");
 	}
-	nextTile = tiles[nextIndex];
+	return nextIndex;
+}
 
-	// deactivate all tiles in case of multi col touch event (i.e. no mouseleave event)
-	tiles.forEach(tile => {
+function scrollPage(container, pages, layoutSelect, direction) {
+	// get tile currently in focus
+	const activeTile = container.querySelector(".active");
+	const index = pages.indexOf(activeTile);
+
+	// determine which tile to scroll to
+	const nextIndex = getNextIndex(index, direction, pages.length);
+	if (nextIndex === index) return;
+	nextTile = pages[nextIndex];
+
+	// scroll
+	container.style.top = nextTile.offsetTop * -1;
+
+	// deactivate all pages in case of multi col touch event (i.e. no mouseleave event)
+	pages.forEach(tile => {
 		tile.classList.remove("active");
 		tile.classList.remove("visible");
 	});
@@ -57,47 +52,49 @@ function scrollPage(container, tiles, { cols, rows }, direction) {
 	nextTile.classList.add("active");
 	nextTile.classList.add("visible");
 
-	// scroll
-	container.style.top = nextTile.offsetTop * -1;
-
-	// load iframes one page below
-	loadUpcomingIframes(tiles, nextIndex, cols, rows);
+	// load iframes 2 pages below
+	loadUpcomingIframes(pages, nextIndex);
+	// -> pages activation & deactivation in 'transitionend' handler
 }
 
-// message from iframe: swipe-up[-edge] | swipe-down[-edge] | touch
-function receiveMessage(e, container, tiles, layout) {
-	const direction =
-		e.data === "swipe-up-edge" || e.data === "scroll-down-edge"
-			? "next"
-			: e.data === "swipe-down-edge" || e.data === "scroll-up-edge"
-			? "prev"
-			: "";
-	if (direction) scrollPage(container, tiles, layout, direction);
+// document.addEventListener("transitionend", e => {
+// 	if (e.propertyName === "top") {
+// 	}
+// });
+
+// handle message from iframe
+function receiveMessage(e, container, pages, layoutSelect) {
+	scrollPage(container, pages, layoutSelect, e.data);
 }
 
-function setUpScroll(tiles, layout, container, fullScreen) {
-	// listen for swipe events from iframe
-	window.addEventListener("message", e => {
-		receiveMessage(e, container, tiles, layout);
-	});
+function handleWheel(e, container, pages, layoutSelect) {
+	const direction = e.deltaY > 0 ? "next" : "prev";
+	scrollPage(container, pages, layoutSelect, direction);
+}
 
-	// TEMP
-	//loadIFrames(container);
-	// init tiles and iframes
-	if (fullScreen) {
-		// activate first tile, which loads upcoming iframes
-		scrollPage(container, tiles, layout, "start");
-	} else {
-		// load iframes visible on page
-		loadUpcomingIframes(tiles, 0, layout.cols, layout.rows);
+//
+//
+//
+
+function setUpScroll(pages, container, layoutSelect) {
+	// prevent adding multiple listeners on window resize
+	if (!window.onmessage) {
+		// listen for scroll events from iframe
+		window.onmessage = e => {
+			receiveMessage(e, container, pages, layoutSelect);
+		};
 	}
 
-	// TODO
-	// listen for swipe events from .overlay
-	// document.addEventListener("touchstart", handleTouchStart);
-	// document.addEventListener("touchend", handleTouchEnd);
+	// activate first tile, which loads upcoming iframes
+	scrollPage(container, pages, layoutSelect, "start");
+	// load iframes visible on page
+	// loadUpcomingIframes(pages, 0);
 
-	// listend to wheel & trackpad events from overlay
+	document.addEventListener("touchstart", () => console.log(`touchstart`));
+	document.addEventListener("touchend", () => console.log(`touchend`));
+	document.addEventListener("touchmove", () => console.log(`touchmove`));
+	// TODO: debounce
+	document.addEventListener("wheel", e =>
+		handleWheel(e, container, pages, layoutSelect)
+	);
 }
-//
-//

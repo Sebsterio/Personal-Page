@@ -18,3 +18,8 @@ const JS30projects = JS30folders.map(folderName => ({
 		folderName.replace(/ /g, "%20") +
 		"/index.html"
 }));
+
+const Library = {
+	home: JS30projects,
+	JS30: JS30projects
+};

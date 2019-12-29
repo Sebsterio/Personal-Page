@@ -12,15 +12,30 @@
 }
 
 .page {
-	/* position: absolute;
+	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
-	left: 0; */
-	position: relative;
+	left: 0;
 
 	display: flex;
 	flex-flow: row nowrap;
+
+	opacity: 1;
+	transition: opacity 600ms;
+
+	/* in case iframe has transparent bg */
+	background-color: white;
+}
+
+/* transition away from top of page stack */
+.page.closing {
+	opacity: 0;
+}
+
+/* not on top of page stack */
+.page.closed {
+	display: none;
 }
 
 .panel {

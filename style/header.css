@@ -27,4 +27,6 @@ header select {
 
 header h1 {
 	margin: 0;
+	font-size: 4vmin;
+	cursor: pointer;
 }

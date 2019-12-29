@@ -7,9 +7,9 @@ const NARROW_LAYOUT_WIDTH = 400;
 function loadCatalog(catalog, container, layoutSelect) {
 	container.innerHTML = "";
 	const pages = getPages(catalog);
-	renderPages(pages, container);
-	// setUpOverlays(pages, layout);
-	setUpScroll(pages, container, layoutSelect);
+	renderPages(pages, container); // move to end?
+	setUpPanels(pages, title, layoutSelect.value);
+	setUpScroll(pages);
 }
 
 function loadDoc() {

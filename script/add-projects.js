@@ -33,9 +33,6 @@
 			page = pages[i];
 			page.style.zIndex = pages.length - i;
 			if (i !== 0) page.classList.add("disabled");
-			// TODO: rename the below
-			// page.classList.add("visible");
-			// page.classList.add("active");
 
 			// alternate iframe and panel positions
 			if (i % 2 == 1) {

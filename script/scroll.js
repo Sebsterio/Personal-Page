@@ -29,6 +29,9 @@
 			// reset recently closed page
 			e.target.classList.add("disabled");
 			e.target.classList.remove("closing");
+			const panel = e.target.querySelector(".panel");
+			panel.classList.remove("on-top");
+			panel.classList.remove("visible");
 
 			shiftPages(pages, increment);
 
@@ -68,22 +71,10 @@
 	scroll.ready = true;
 	scroll.increment = 0;
 
-	// ------------------- set up scroll ---------------------
+	// -------------------- set up scroll ---------------------
 
 	const SWIPE_SENSITIVITY = 15;
 	const SCROLL_SENSITIVITY = 80;
-
-	// Handle message from iframe
-	function handleeMessage(e, pages) {
-		const increment = e.data === "next" ? 1 : e.data === "prev" ? -1 : 0;
-		scroll(pages, increment);
-	}
-
-	function handleWheel(e, pages) {
-		// avoid trackpad scroll inertia
-		if (e.deltaY > SCROLL_SENSITIVITY) scroll(pages, 1);
-		else if (e.deltaY < -SCROLL_SENSITIVITY) scroll(pages, -1);
-	}
 
 	let touchstartY = 0;
 
@@ -96,6 +87,18 @@
 		const deltaY = touchendY - touchstartY;
 		if (deltaY > SWIPE_SENSITIVITY) scroll(pages, -1);
 		else if (deltaY < -SWIPE_SENSITIVITY) scroll(pages, 1);
+	}
+
+	function handleWheel(e, pages) {
+		// avoid trackpad scroll inertia
+		if (e.deltaY > SCROLL_SENSITIVITY) scroll(pages, 1);
+		else if (e.deltaY < -SCROLL_SENSITIVITY) scroll(pages, -1);
+	}
+
+	// Handle message from iframe
+	function handleeMessage(e, pages) {
+		const increment = e.data === "next" ? 1 : e.data === "prev" ? -1 : 0;
+		scroll(pages, increment);
 	}
 
 	window.setUpScroll = function(pages) {

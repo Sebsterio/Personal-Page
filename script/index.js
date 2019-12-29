@@ -22,6 +22,8 @@ function loadDoc() {
 
 	// Load home section on doc load
 	loadCatalog(Library.home, mainContent, layoutSelect);
+
+	// move inside loadCatalog, before setUPScroll?
 	updateLayout(mainContent, layoutSelect, null);
 
 	// Change section in nav menu

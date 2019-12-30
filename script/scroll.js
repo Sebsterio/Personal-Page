@@ -38,8 +38,8 @@
 			shiftPages(pages, increment);
 
 			// load iframe content in upcoming page
-			if (increment > 0) loadFrame(pages, pages.length - 1);
-			else if (increment < 0) loadFrame(pages, 1);
+			if (increment) loadFrame(pages, pages.length - 1);
+			else loadFrame(pages, 1);
 
 			scroll.ready = true;
 		}
@@ -99,8 +99,8 @@
 
 	// Handle message from iframe
 	function handleeMessage(e, pages) {
-		if (e.data === "next") scroll(pages, 1);
-		else if (e.data === "prev") scroll(pages, 0);
+		if (e.data === "down") scroll(pages, 1);
+		else if (e.data === "up") scroll(pages, 0);
 	}
 
 	window.setUpScroll = function(pages) {

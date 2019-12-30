@@ -1,5 +1,7 @@
 #main-content,
-.page {
+.page,
+.page.full-width iframe,
+.page.full-width .panel {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -24,21 +26,18 @@
 	opacity: 0;
 }
 
-/* ISSUE with `display: none`:
-When frame loads before page gets enabled, script using 'width = window.innerWidth' produces width == 0 */
 .page.disabled {
-	visibility: none;
+	/* ISSUE with `display: none`:
+	When frame loads before page gets enabled, script using 'width = window.innerWidth' produces width == 0 */
+	visibility: hidden;
 }
+
+/*******************************************
+                   PANEL
+ *******************************************/
 
 .panel {
 	flex: 1 1 auto;
-
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-		sans-serif;
-	color: white;
-	text-shadow: 0 0 60px white, 0 0 4px black;
-	background-color: black;
-
 	overflow: hidden;
 
 	/* Panel toggle */
@@ -50,19 +49,9 @@ When frame loads before page gets enabled, script using 'width = window.innerWid
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
-	/* justify-content: flex-start; */
 }
 
-/* Panel toggle on header click (full-width only) */
-
-.page.full-width iframe,
-.page.full-width .panel {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-}
+/* Toggle panel on header click (full-width only) */
 
 .page.full-width iframe {
 	z-index: 0;
@@ -80,13 +69,12 @@ When frame loads before page gets enabled, script using 'width = window.innerWid
 	opacity: 1;
 }
 
-/* Panel hover (non-full-width) */
+/* Toggle details on panel hover (split-width) and toggle (full-width) */
 
 .panel > div {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
-
 	transition: all 250ms;
 }
 
@@ -124,7 +112,9 @@ When frame loads before page gets enabled, script using 'width = window.innerWid
 	transform: translateX(0);
 }
 
-/*****************************/
+/*******************************************
+                PANEL CONTENT
+ *******************************************/
 
 .panel h1 {
 	font-size: 3em;

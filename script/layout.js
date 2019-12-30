@@ -71,7 +71,7 @@
 	let userLayout;
 
 	// Update frame and panel size and layoutSelect options according to screen size
-	window.updateLayout = function(container, selectEl, event) {
+	window.updateLayout = function(container, layoutSelect, event) {
 		const containerSize = getContainerSize(container);
 		let newLayout;
 
@@ -83,15 +83,18 @@
 		// On window resize | loadDoc()
 		else {
 			newLayout = containerSize.width >= SPLIT_LAYOUT_MIN_WIDTH ? 1 : 0;
-			const currentLayout = Number(selectEl.value);
+			console.log(layoutSelect.value);
+			const currentLayout = Number(layoutSelect.value);
 
-			// At resize boundry, consider userLayout and update selectEl
+			// At resize boundry | loadDoc()
+			// consider userLayout and update layoutSelect
 			if (newLayout !== currentLayout) {
-				toggleDisabled(selectEl, !newLayout);
+				toggleDisabled(layoutSelect, !newLayout);
 				if (newLayout && !isNaN(userLayout)) newLayout = userLayout;
-				selectEl.value = newLayout;
+				layoutSelect.value = newLayout;
 			}
 		}
+		// TODO: update header text Details / Site title
 
 		// Update page classes (layout) and iframe & panel sizes
 		const pageSizes = getPageSizes(containerSize, newLayout);

@@ -51,7 +51,7 @@
 	}
 
 	// toggle panel visiblity on header click in full-width layout
-	function handleHeaderClick(layoutSelect) {
+	function handleBarclick(layoutSelect) {
 		if (layoutSelect.value === "0") {
 			const panel = document.querySelector(".page:not(.disabled) .panel");
 			if (panel.classList.contains("visible")) {
@@ -65,7 +65,7 @@
 			}
 		}
 	}
-	window.setUpPanels = function(pages, header, layoutSelect) {
+	window.setUpPanels = function(pages, bar, layoutSelect) {
 		pages.forEach(page => {
 			const panel = page.querySelector(".panel");
 			addHoverInteractions(panel, layoutSelect);
@@ -76,6 +76,6 @@
 		setUpPanels.isDone = true;
 
 		document.addEventListener("transitionend", handleTransitionEnd);
-		header.addEventListener("click", () => handleHeaderClick(layoutSelect));
+		bar.addEventListener("click", () => handleBarclick(layoutSelect));
 	};
 })();

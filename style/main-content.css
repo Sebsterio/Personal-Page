@@ -16,9 +16,6 @@
 
 	opacity: 1;
 	transition: opacity 400ms;
-
-	/* in case iframe has transparent bg */
-	background-color: white;
 }
 
 /* transition away from top of page stack */

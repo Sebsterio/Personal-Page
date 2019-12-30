@@ -1,24 +1,28 @@
-function loadCatalog(catalog, container, layoutSelect) {
+// Populate #main-content with projects and set up UI
+function loadCatalog(catalog, container, bar, layoutSelect) {
 	container.innerHTML = "";
 	const pages = getPages(catalog);
 	renderPages(pages, container); // move to end?
-	setUpPanels(pages, title, layoutSelect);
+	setUpPanels(pages, bar, layoutSelect);
 	setUpScroll(pages);
+
+	// temp pos
+	updateLayout(container, layoutSelect, null);
 }
 
 function loadDoc() {
 	// TODO: click -> toggle overlay
-	const title = document.getElementById("title");
+	const bar = document.getElementById("bar");
 
 	const navLinks = document.querySelectorAll(".nav-link");
 	const layoutSelect = document.getElementById("layout-select");
 	const mainContent = document.getElementById("main-content");
 
-	// Load home section on doc load
-	loadCatalog(Library.home, mainContent, layoutSelect);
+	// init with option 1 selected, so that doc laod in narrow window (layout 0) triggers toggleDisabled() as (newLayout != currentLayout) -> (0 != 1)
+	layoutSelect.value = "1";
 
-	// move inside loadCatalog, before setUPScroll?
-	updateLayout(mainContent, layoutSelect, null);
+	// Load home section on doc load
+	loadCatalog(Library.home, mainContent, bar, layoutSelect);
 
 	// Change section in nav menu
 	navLinks.forEach(link => {

@@ -30,3 +30,7 @@ header h1 {
 	font-size: 4vmin;
 	cursor: pointer;
 }
+
+select option:checked {
+	font-weight: bold;
+}

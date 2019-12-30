@@ -1,48 +1,50 @@
 (function() {
 	function handleTransitionEnd(e) {
-		// when .panel faded out, move it behind iframe
+		// When .panel faded out, move it behind iframe
 		if (
 			e.propertyName == "opacity" &&
 			e.target.classList.contains("panel") &&
 			!e.target.classList.contains("visible")
 		) {
 			e.target.classList.remove("on-top");
-			expanding = false;
+			e.target.classList.remove("expanding");
 			e.target.classList.remove("expanded");
 		}
-		// when .description appeared, show p
+		// When .description appeared, show p
 		else if (
 			e.propertyName === "flex-grow" &&
 			e.target.classList.contains("description")
 		) {
-			if (expanding) e.target.parentElement.classList.add("expanded");
+			if (e.target.parentElement.classList.contains("expanding"))
+				e.target.parentElement.classList.add("expanded");
 			// handle abort (mouseleave)
 			else e.target.parentElement.classList.remove("hover");
 		}
-		// when p dissapeard, hide .description
+		// When p dissapeard, hide .description
 		else if (
 			e.propertyName === "transform" &&
 			e.target.classList.contains("description")
 		) {
-			if (!expanding) e.target.parentElement.classList.remove("hover");
+			if (!e.target.parentElement.classList.contains("expanding"))
+				e.target.parentElement.classList.remove("hover");
 			// handle abort (mouseenter)
 			else e.target.parentElement.classList.add("expanded");
 		}
 	}
 
 	// display detailed description on panel hover
-	let expanding = false;
+	//let expanding = false;
 	function addHoverInteractions(panel, layoutSelect) {
 		panel.addEventListener("mouseenter", e => {
 			if (Number(layoutSelect.value) > 0) {
-				expanding = true;
+				panel.classList.add("expanding");
 				panel.classList.add("hover");
 				// -> transitionend adds class .expanded
 			}
 		});
 		panel.addEventListener("mouseleave", e => {
 			if (Number(layoutSelect.value) > 0) {
-				expanding = false;
+				panel.classList.remove("expanding");
 				panel.classList.remove("expanded");
 
 				// -> transitionend removes class .hover
@@ -60,7 +62,7 @@
 			} else {
 				panel.classList.add("on-top");
 				panel.classList.add("visible");
-				expanding = true;
+				panel.classList.add("expanding");
 				panel.classList.add("hover");
 			}
 		}

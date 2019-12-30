@@ -57,6 +57,7 @@ function addHoverInteractions(panel, layoutSelect) {
 		if (Number(layoutSelect.value) > 0) {
 			expanding = false;
 			panel.classList.remove("expanded");
+
 			// -> transitionend removes class .hover
 		}
 	});

@@ -7,6 +7,7 @@
 		const frame = page.querySelector("iframe");
 		if (frame.src != frame.dataset.src) {
 			frame.src = frame.dataset.src;
+			console.log("loaded frame " + z);
 		}
 	}
 
@@ -62,6 +63,7 @@
 		const nextPageZIndex = increment > 0 ? pages.length - 1 : 1;
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
+		console.log("enabled page " + nextPageZIndex);
 
 		// close current page
 		const currentPage = getPage(pages, pages.length);

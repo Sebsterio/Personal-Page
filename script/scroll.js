@@ -32,6 +32,8 @@
 			const panel = e.target.querySelector(".panel");
 			panel.classList.remove("on-top");
 			panel.classList.remove("visible");
+			panel.classList.remove("hover");
+			panel.classList.remove("expanded");
 
 			shiftPages(pages, increment);
 

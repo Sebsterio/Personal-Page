@@ -15,8 +15,18 @@
 				<!-- fallback -->
 				<a href="${project.url}">${project.name}</a>
 			</iframe>
-			<div class="panel"><p>${project.name}</p></div>		
-			`;
+			<div class="panel">
+				<div class="title">
+					<h1>${project.name}</h1>
+				</div>
+				<div class="description">
+					<p>Lorem ipsum cupiditate, corporis a qui libero ipsum delectus quidem dolor at nulla, adipisci veniam in reiciendis aut asperiores omnis blanditiis quod quas laborum nam! Fuga ad tempora in aspernatur pariatur fugit quibusdam dolores sunt esse magni, ut, dignissimos.</p>
+				</div>
+				<div class="tags">
+					<p>#Lorem #ipsum #cupiditate</p>
+				</div>
+			</div>		
+		`;
 		return page;
 	}
 

@@ -8,7 +8,7 @@ function loadCatalog(catalog, container, layoutSelect) {
 	container.innerHTML = "";
 	const pages = getPages(catalog);
 	renderPages(pages, container); // move to end?
-	setUpPanels(pages, title, layoutSelect.value);
+	setUpPanels(pages, title, layoutSelect);
 	setUpScroll(pages);
 }
 

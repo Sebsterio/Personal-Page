@@ -40,15 +40,27 @@
 .panel {
 	flex: 1 1 auto;
 
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+		sans-serif;
+	color: white;
+	text-shadow: 0 0 60px white, 0 0 4px black;
 	background-color: black;
+
+	overflow: hidden;
+
+	/* Panel toggle */
 	opacity: 1;
 	transition: opacity 300ms;
 
+	/* Panel hover */
 	text-align: center;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
+	/* justify-content: flex-start; */
 }
+
+/* Panel toggle on header click (full-width only) */
 
 .page.full-width iframe,
 .page.full-width .panel {
@@ -75,10 +87,56 @@
 	opacity: 1;
 }
 
-.panel p {
+/* Panel hover (non-full-width) */
+
+.panel > div {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+
+	transition: all 250ms;
+}
+
+.panel .title {
+	flex: 1 0 100%;
+}
+
+.panel .description,
+.panel .tags {
+	height: 0;
+	flex: 0 1 auto;
+	opacity: 0;
+}
+
+.panel .description {
+	transform: translateX(-100%);
+}
+
+.panel .tags {
+	transform: translateX(100%);
+}
+
+.panel.hover .title {
+	flex: 1 1 auto;
+}
+
+.panel.hover .description,
+.panel.hover .tags {
+	flex: 2 1 auto;
+}
+
+.panel.expanded .description,
+.panel.expanded .tags {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+/*****************************/
+
+.panel h1 {
 	font-size: 3em;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-		sans-serif;
-	color: white;
-	text-shadow: 0 0 60px white, 0 0 4px black;
+}
+
+.panel p {
+	font-size: 1.5em;
 }

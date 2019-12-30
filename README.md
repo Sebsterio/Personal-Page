@@ -17,4 +17,16 @@
 
 ## Known Issues
 
-#### touchscreen keyboard invocation removes focus from clicked (touched) input
+#### On .panel mouseleave, .title elemenet jumps into it's next position instead of transitioning smoothly
+
+Solutions:
+
+- transition property 'top' instead of 'flex-grow'
+- OR Switch to animations instead of transitions
+
+#### When in full-width layout panel is expanded, and layout is changed to half-width, panel remains expanded
+
+Solutions:
+
+- reset .panel classes on layout change
+- OR use .page mousemove instead of .panel mouseenter/leave

@@ -33,20 +33,18 @@
 	}
 
 	// display detailed description on panel hover
-	//let expanding = false;
 	function addHoverInteractions(panel, layoutSelect) {
-		panel.addEventListener("mouseenter", e => {
+		panel.addEventListener("mouseenter", () => {
 			if (Number(layoutSelect.value) > 0) {
 				panel.classList.add("expanding");
 				panel.classList.add("hover");
 				// -> transitionend adds class .expanded
 			}
 		});
-		panel.addEventListener("mouseleave", e => {
+		panel.addEventListener("mouseleave", () => {
 			if (Number(layoutSelect.value) > 0) {
 				panel.classList.remove("expanding");
 				panel.classList.remove("expanded");
-
 				// -> transitionend removes class .hover
 			}
 		});
@@ -73,7 +71,7 @@
 			addHoverInteractions(panel, layoutSelect);
 		});
 
-		// avoid adding multiple identical listeners by loadDoc()
+		// Add doc & window listeners only on first load
 		if (setUpPanels.isDone) return;
 		setUpPanels.isDone = true;
 

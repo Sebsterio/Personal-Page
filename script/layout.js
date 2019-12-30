@@ -83,7 +83,6 @@
 		// On window resize | loadDoc()
 		else {
 			newLayout = containerSize.width >= SPLIT_LAYOUT_MIN_WIDTH ? 1 : 0;
-			console.log(layoutSelect.value);
 			const currentLayout = Number(layoutSelect.value);
 
 			// At resize boundry | loadDoc()
@@ -94,29 +93,11 @@
 				layoutSelect.value = newLayout;
 			}
 		}
-		// TODO: update header text Details / Site title
+		// TODO: toggle header text: "Show details" / [Site Title]
+		// info icon?
 
 		// Update page classes (layout) and iframe & panel sizes
 		const pageSizes = getPageSizes(containerSize, newLayout);
 		updatePages(container, newLayout, pageSizes);
 	};
 })();
-
-// JUST IN CASE
-//
-// // Window resize | loadDoc()
-// else {
-// 	// wide screen
-// 	if (containerSize.width >= SPLIT_LAYOUT_MIN_WIDTH) {
-// 		newLayout = 1;
-// 		toggleDisabled(selectEl, false);
-// 		if (!isNaN(userLayout)) newLayout = userLayout;
-// 	}
-// 	// narrow screen
-// 	else {
-// 		newLayout = 0;
-// 		toggleDisabled(selectEl, true);
-// 	}
-// 	// update selectEl if layout changed
-// 	if (newLayout !== currentLayout) selectEl.value = newLayout;
-// }

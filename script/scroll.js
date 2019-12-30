@@ -63,7 +63,6 @@
 		const nextPageZIndex = increment ? pages.length - 1 : 1;
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
-
 		// close current page
 		const currentPage = getPage(pages, pages.length);
 		currentPage.classList.add("closing");
@@ -109,7 +108,7 @@
 		loadFrame(pages, pages.length - 1);
 		loadFrame(pages, 1);
 
-		// prevent re-adding scroll listeners by loadCatalog
+		// Add doc & window listeners only on first load
 		if (setUpScroll.isDone) return;
 		setUpScroll.isDone = true;
 

@@ -1,9 +1,3 @@
-// Minimum screen width for 2-col layout
-const BOOK_LAYOUT_MIN_WIDTH = 800;
-
-// iframe width in "mobile view"
-const NARROW_LAYOUT_WIDTH = 400;
-
 function loadCatalog(catalog, container, layoutSelect) {
 	container.innerHTML = "";
 	const pages = getPages(catalog);

@@ -7,15 +7,14 @@
 		const frame = page.querySelector("iframe");
 		if (frame.src != frame.dataset.src) {
 			frame.src = frame.dataset.src;
-			console.log("loaded frame " + z);
 		}
 	}
 
-	// move all pages in Z axis and loop at both ends of stack
+	// increment zIndex of all pages and loop at both ends of stack
 	function shiftPages(pages, increment) {
 		pages.forEach(page => {
 			let index = Number(page.style.zIndex);
-			index = index + increment;
+			index = index + (increment ? 1 : -1);
 			if (index > pages.length) index = 1;
 			if (index <= 0) index = pages.length;
 			page.style.zIndex = index;
@@ -56,14 +55,14 @@
 	}
 
 	function scroll(pages, increment) {
+		// communicate with handlePageTransitionEnd()
 		scroll.ready = false;
 		scroll.increment = increment;
 
 		// enable next/prev page
-		const nextPageZIndex = increment > 0 ? pages.length - 1 : 1;
+		const nextPageZIndex = increment ? pages.length - 1 : 1;
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
-		console.log("enabled page " + nextPageZIndex);
 
 		// close current page
 		const currentPage = getPage(pages, pages.length);
@@ -71,9 +70,8 @@
 		// -> continued in handlePageTransitionEnd()
 	}
 
-	// communication between scroll() and handlePageTransitionEnd()
+	// debounce scroll
 	scroll.ready = true;
-	scroll.increment = 0;
 
 	// -------------------- set up scroll ---------------------
 
@@ -89,20 +87,20 @@
 	function handleTouchEnd(e, pages) {
 		const touchendY = e.changedTouches[0].pageY;
 		const deltaY = touchendY - touchstartY;
-		if (deltaY > SWIPE_SENSITIVITY) scroll(pages, -1);
-		else if (deltaY < -SWIPE_SENSITIVITY) scroll(pages, 1);
+		if (deltaY < -SWIPE_SENSITIVITY) scroll(pages, 1);
+		else if (deltaY > SWIPE_SENSITIVITY) scroll(pages, 0);
 	}
 
 	function handleWheel(e, pages) {
 		// avoid trackpad scroll inertia
 		if (e.deltaY > SCROLL_SENSITIVITY) scroll(pages, 1);
-		else if (e.deltaY < -SCROLL_SENSITIVITY) scroll(pages, -1);
+		else if (e.deltaY < -SCROLL_SENSITIVITY) scroll(pages, 0);
 	}
 
 	// Handle message from iframe
 	function handleeMessage(e, pages) {
-		const increment = e.data === "next" ? 1 : e.data === "prev" ? -1 : 0;
-		scroll(pages, increment);
+		if (e.data === "next") scroll(pages, 1);
+		else if (e.data === "prev") scroll(pages, 0);
 	}
 
 	window.setUpScroll = function(pages) {
@@ -115,14 +113,13 @@
 		if (setUpScroll.isDone) return;
 		setUpScroll.isDone = true;
 
-		document.addEventListener("transitionend", e =>
-			handlePageTransitionEnd(e, pages, scroll.increment)
-		);
 		document.addEventListener("touchstart", handleTouchStart);
 		document.addEventListener("touchend", e => handleTouchEnd(e, pages));
 		document.addEventListener("wheel", e => handleWheel(e, pages));
-		window.addEventListener("message", e => {
-			handleeMessage(e, pages);
-		});
+		window.addEventListener("message", e => handleeMessage(e, pages));
+
+		document.addEventListener("transitionend", e =>
+			handlePageTransitionEnd(e, pages, scroll.increment)
+		);
 	};
 })();

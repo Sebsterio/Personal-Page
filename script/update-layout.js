@@ -1,4 +1,10 @@
 (function() {
+	// Minimum screen width for 2-col layout
+	const BOOK_LAYOUT_MIN_WIDTH = 800;
+
+	// iframe width in "mobile screen" layout
+	const NARROW_LAYOUT_WIDTH = 400;
+
 	function getContainerSize(container) {
 		return {
 			containerWidth: parseInt(getComputedStyle(container).width),
@@ -19,6 +25,7 @@
 		}
 	}
 
+	// ...Will be developed further to take into account user selected layout
 	function getLayout(containerSize, min) {
 		if (containerSize.containerWidth > min) return 1;
 		else return 0;
@@ -36,14 +43,16 @@
 
 	function getPageSizes({ containerWidth, containerHeight }, layout) {
 		let frameWidth, panelWidth;
+		// Full width
 		if (layout === 0) {
-			// Full width
 			frameWidth = panelWidth = containerWidth;
-		} else if (layout === 1) {
-			// Half width
+		}
+		// Half width
+		else if (layout === 1) {
 			frameWidth = panelWidth = containerWidth / 2;
-		} else if (layout === 2) {
-			// Narrow width
+		}
+		// Narrow width
+		else if (layout === 2) {
 			frameWidth = NARROW_LAYOUT_WIDTH;
 			panelWidth = containerWidth - NARROW_LAYOUT_WIDTH;
 		} else new Error("layout type error");
@@ -73,7 +82,6 @@
 	}
 
 	// Update frame and panel size and layoutSelect options according to screen size
-	// let userLayout;
 	window.updateLayout = function(container, selectEl, event) {
 		const containerSize = getContainerSize(container);
 		const newLayout = event
@@ -81,6 +89,9 @@
 			  Number(event.target.value)
 			: // window resize
 			  getLayout(containerSize, BOOK_LAYOUT_MIN_WIDTH);
+		// TODO: only update layout at boundry or UI select
+		// if (newLayout !== userLayout)
+		// currentLayout = newLayout;
 		const pageSizes = getPageSizes(containerSize, newLayout);
 
 		// On load/resize, enable/disable #layout-select options
@@ -88,9 +99,5 @@
 
 		// Update page classes (layout) and iframe & panel sizes
 		updatePages(container, newLayout, pageSizes);
-
-		// TODO: only update layout at boundry or UI select
-		// if (newLayout !== userLayout)
-		// currentLayout = newLayout;
 	};
 })();

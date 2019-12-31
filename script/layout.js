@@ -67,11 +67,15 @@
 		});
 	}
 
-	// layout selected by user
+	// Layout selected by user
 	let userLayout;
 
+	// container.width range; irrespective of userLayout
+	// Init as 1, so that doc laod in narrow window (0) triggers toggleDisabled() as (newScope !== currentScope) -> (0 != 1)
+	let currentRange = 1;
+
 	// Update frame and panel size and layoutSelect options according to screen size
-	window.updateLayout = function(container, layoutSelect, event) {
+	window.updateLayout = function(event, container, layoutSelect, header) {
 		const containerSize = getContainerSize(container);
 		let newLayout;
 
@@ -82,19 +86,20 @@
 
 		// On window resize | loadDoc()
 		else {
-			newLayout = containerSize.width >= SPLIT_LAYOUT_MIN_WIDTH ? 1 : 0;
-			const currentLayout = Number(layoutSelect.value);
-
+			let newRange = containerSize.width >= SPLIT_LAYOUT_MIN_WIDTH ? 1 : 0;
 			// At resize boundry | loadDoc()
-			// consider userLayout and update layoutSelect
-			if (newLayout !== currentLayout) {
-				toggleDisabled(layoutSelect, !newLayout);
-				if (newLayout && !isNaN(userLayout)) newLayout = userLayout;
-				layoutSelect.value = newLayout;
+			if (newRange !== currentRange) {
+				currentRange = newRange;
+				toggleDisabled(layoutSelect, !newRange);
+				// TODO: toggle header text: "Show details" / [Site Title]
 			}
+			updateHeaderLayout(header, !!newRange);
+
+			newLayout = newRange;
+			if (newRange && !isNaN(userLayout)) newLayout = userLayout;
+
+			layoutSelect.value = newLayout;
 		}
-		// TODO: toggle header text: "Show details" / [Site Title]
-		// info icon?
 
 		// Update page classes (layout) and iframe & panel sizes
 		const pageSizes = getPageSizes(containerSize, newLayout);

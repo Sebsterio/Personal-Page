@@ -65,7 +65,7 @@
 			}
 		}
 	}
-	window.setUpPanels = function(pages, bar, layoutSelect) {
+	window.setUpPanels = function(pages, header, layoutSelect) {
 		pages.forEach(page => {
 			const panel = page.querySelector(".panel");
 			addHoverInteractions(panel, layoutSelect);
@@ -76,7 +76,8 @@
 		if (setUpPanels.isDone) return;
 		setUpPanels.isDone = true;
 
-		document.addEventListener("transitionend", handleTransitionEnd);
+		const bar = header.querySelector(".main-bar");
 		bar.addEventListener("click", () => handleBarclick(layoutSelect));
+		document.addEventListener("transitionend", handleTransitionEnd);
 	};
 })();

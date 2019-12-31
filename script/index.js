@@ -1,45 +1,43 @@
 // Populate #main-content with projects and set up UI
-function loadCatalog(catalog, pages, container, bar, layoutSelect) {
-	container.innerHTML = "Loading content...";
+function loadCatalog(catalog, pages, container, header, layoutSelect) {
+	container.innerHTML = "<h2>Loading content...</h2>";
 	pages.length = 0; // valid & safe
 	pages.push(...getPages(catalog));
 	renderPages(pages, container); // move to end?
-	setUpPanels(pages, bar, layoutSelect);
+	setUpPanels(pages, header, layoutSelect);
 	setUpScroll(pages);
-	updateLayout(container, layoutSelect, null);
+	updateLayout(null, container, layoutSelect, header);
+	setUpHeader(header, layoutSelect);
 }
 
 function loadDoc() {
-	const bar = document.getElementById("bar");
+	const header = document.getElementById("header");
 	const navLinks = document.querySelectorAll(".nav-link");
 	const layoutSelect = document.getElementById("layout-select");
-	const mainContent = document.getElementById("main-content");
+	const container = document.getElementById("main-content");
 
 	// Declare once and mutate on loadCatalog() instead of redeclaring so that event listeners that take it as parameter can be declared only once
 	let pages = [];
 
-	// Init with option 1 selected, so that doc laod in narrow window (layout 0) triggers toggleDisabled() as (newLayout != currentLayout) -> (0 != 1)
-	layoutSelect.value = "1";
-
 	// Load home section on doc load
-	loadCatalog(Library.home, pages, mainContent, bar, layoutSelect);
+	loadCatalog(Library.home, pages, container, header, layoutSelect);
 
 	// Change section in nav menu
 	navLinks.forEach(link => {
 		link.addEventListener("click", () => {
 			const catalog = Library[link.dataset.catalog];
-			loadCatalog(catalog, pages, mainContent, bar, layoutSelect);
+			loadCatalog(catalog, pages, container, header, layoutSelect);
 		});
 	});
 
 	// Change layout in UI
 	layoutSelect.addEventListener("change", e => {
-		updateLayout(mainContent, layoutSelect, e);
+		updateLayout(e, container, layoutSelect, header);
 	});
 
 	// Window resize (includes orientationchange)
 	window.addEventListener("resize", () => {
-		updateLayout(mainContent, layoutSelect, null);
+		updateLayout(null, container, layoutSelect, header);
 	});
 }
 

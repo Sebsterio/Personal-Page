@@ -1,15 +1,76 @@
 header {
+	position: relative;
+	height: 7vmin;
+	display: grid;
+	grid-template-columns: 100% 100% 100%;
+}
+
+header:not(.extended) {
+	transform: translateX(-100%);
+}
+
+header:not(.extended)[data-position="left"] {
+	transform: translateX(0);
+}
+
+header:not(.extended)[data-position="right"] {
+	transform: translateX(-200%);
+}
+
+/* ----- Column ----- */
+
+.header-col,
+.header-section {
 	display: flex;
 	flex-flow: row nowrap;
+	align-items: center;
+	overflow: hidden;
+}
+
+.header-col {
 	justify-content: space-between;
 }
 
-header > div {
-	/* flex: 1 1 33.3%; */
-	border: 1px solid blue;
-
-	text-align: center;
+header.extended .header-col {
 	justify-content: center;
+}
+
+/* ----- Icon ----- */
+
+.header-icon {
+	padding: 0 2vmin;
+	height: 3vmin;
+}
+
+header.extended .header-icon {
+	display: none;
+}
+
+.header-icon img {
+	height: 3vmin;
+}
+
+/* ----- Main bar ----- */
+
+.main-bar {
+	justify-content: center;
+}
+
+.main-bar .header-icon {
+}
+
+header h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 5vmin;
+	line-height: 6vmin;
+	cursor: pointer;
+}
+
+/* ----- Nav bar ----- */
+
+.nav-bar {
+	justify-content: flex-start;
 }
 
 .nav-link {
@@ -18,14 +79,14 @@ header > div {
 	cursor: pointer;
 }
 
-header select {
-	display: inline-block;
+/* ----- Options bar ----- */
+
+.options-bar {
+	justify-content: flex-end;
 }
 
-header h1 {
-	margin: 0;
-	font-size: 4vmin;
-	cursor: pointer;
+header select {
+	display: inline-block;
 }
 
 select option:checked {

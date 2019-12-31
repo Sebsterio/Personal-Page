@@ -10,6 +10,13 @@
 	/* overflow: hidden; */
 }
 
+#main-content {
+	/* fallback message 'Loading content...' */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .page {
 	display: flex;
 	flex-flow: row nowrap;

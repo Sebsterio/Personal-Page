@@ -9,42 +9,66 @@
 	<link rel="stylesheet" href="style/header.css">
 	<link rel="stylesheet" href="style/main-content.css">
 	<link rel="stylesheet" href="style/theme-dark.css">
+	<script src="https://kit.fontawesome.com/f35e082517.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 	<div class="app">
 
-		<header>
-			<div>
-				<nav>
-					<div class="nav-link" data-catalog="JS30">JS30</div>
-					<div class="nav-link" data-catalog="#">#</div>
-					<div class="nav-link" data-catalog="#">#</div>
+		<header id="header">
+			<div class="header-col">
+				<nav class="header-section nav-bar">
+					<div class="nav-link" data-catalog="#">Home</div>
+					<div class="nav-link" data-catalog="#">Websites</div>
+					<div class="nav-link" data-catalog="JS30">Widgets</div>
+					<div class="nav-link" data-catalog="#">Apps</div>
+					<div class="nav-link" data-catalog="#">Games</div>
 				</nav>
+				<img class="header-icon" data-direction="middle"
+					src="https://image.flaticon.com/icons/svg/271/271228.svg" alt="Right arrow icon">
 			</div>
-			<div id='bar'>
-				<h1>Work In Progress...</h1>
+			<div class="header-col">
+				<img class="header-icon" data-direction="left" src="https://image.flaticon.com/icons/svg/56/56763.svg"
+					alt="Nav menu icon">
+				<div class="header-section main-bar">
+					<h1>Work In Progress...</h1>
+				</div>
+				<img class="header-icon" data-direction="right" src="https://image.flaticon.com/icons/svg/45/45128.svg"
+					alt="Options icon">
 			</div>
-			<div>
-				<select name='layout' id='layout-select'>
-					<option value="0">Full Width</option>
-					<option value="1">Half Width</option>
-					<option value="2">Narrow Width</option>
-				</select>
+			<div class="header-col">
+				<img class="header-icon" data-direction="middle"
+					src="https://image.flaticon.com/icons/svg/271/271220.svg" alt="Left arrow icon">
+				<div class="header-section options-bar">
+					<select name="layout" id="layout-select">
+						<option value="0">Full Width</option>
+						<option value="1">Half Width</option>
+						<option value="2">Narrow Width</option>
+					</select>
+				</div>
 			</div>
 		</header>
 
 		<main>
-			<div id="main-content"> Loading content...</div>
+			<div id="main-content">
+				<h2>Loading content...</h2>
+			</div>
 		</main>
 
 	</div>
-	<script src='script/projects-index.js' type="text/javascript"></script>
-	<script src='script/pages.js' type="text/javascript"></script>
-	<script src='script/layout.js' type="text/javascript"></script>
-	<script src='script/panels.js' type="text/javascript"></script>
-	<script src='script/scroll.js' type="text/javascript"></script>
-	<script src='script/index.js' type="text/javascript"></script>
+	<script src="script/projects.js" type="text/javascript"></script>
+	<script src="script/pages.js" type="text/javascript"></script>
+	<script src="script/layout.js" type="text/javascript"></script>
+	<script src="script/panels.js" type="text/javascript"></script>
+	<script src="script/scroll.js" type="text/javascript"></script>
+	<script src="script/header.js" type="text/javascript"></script>
+	<script src="script/index.js" type="text/javascript"></script>
 </body>
 
 </html>
+
+<!-- 
+<div>Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> 
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+-->

@@ -20,6 +20,8 @@ const JS30projects = JS30folders.map(folderName => ({
 }));
 
 const Library = {
+	// "navLink": "catalog"
 	home: JS30projects,
+	featured: 0,
 	JS30: JS30projects
 };

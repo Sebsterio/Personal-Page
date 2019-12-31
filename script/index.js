@@ -1,7 +1,7 @@
 // Populate #main-content with projects and set up UI
 function loadCatalog(catalog, pages, container, bar, layoutSelect) {
-	container.innerHTML = "";
-	pages.length = 0;
+	container.innerHTML = "Loading content...";
+	pages.length = 0; // valid & safe
 	pages.push(...getPages(catalog));
 	renderPages(pages, container); // move to end?
 	setUpPanels(pages, bar, layoutSelect);
@@ -15,9 +15,10 @@ function loadDoc() {
 	const layoutSelect = document.getElementById("layout-select");
 	const mainContent = document.getElementById("main-content");
 
+	// Declare once and mutate on loadCatalog() instead of redeclaring so that event listeners that take it as parameter can be declared only once
 	let pages = [];
 
-	// init with option 1 selected, so that doc laod in narrow window (layout 0) triggers toggleDisabled() as (newLayout != currentLayout) -> (0 != 1)
+	// Init with option 1 selected, so that doc laod in narrow window (layout 0) triggers toggleDisabled() as (newLayout != currentLayout) -> (0 != 1)
 	layoutSelect.value = "1";
 
 	// Load home section on doc load

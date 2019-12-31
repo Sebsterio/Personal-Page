@@ -10,20 +10,20 @@
 			e.target.classList.remove("expanding");
 			e.target.classList.remove("expanded");
 		}
-		// When .description appeared, show p
+		// When .panel-title moved up, show .panel-p
 		else if (
-			e.propertyName === "flex-grow" &&
-			e.target.classList.contains("description")
+			e.propertyName === "flex-shrink" &&
+			e.target.classList.contains("panel-title")
 		) {
 			if (e.target.parentElement.classList.contains("expanding"))
 				e.target.parentElement.classList.add("expanded");
 			// handle abort (mouseleave)
 			else e.target.parentElement.classList.remove("hover");
 		}
-		// When p dissapeard, hide .description
+		// When .panel-p dissapeard, move .panel-title back to center
 		else if (
 			e.propertyName === "transform" &&
-			e.target.classList.contains("description")
+			e.target.classList.contains("panel-p-main")
 		) {
 			if (!e.target.parentElement.classList.contains("expanding"))
 				e.target.parentElement.classList.remove("hover");
@@ -32,7 +32,7 @@
 		}
 	}
 
-	// display detailed description on panel hover
+	// display .panel-p on .panel:hover
 	function addHoverInteractions(panel, layoutSelect) {
 		panel.addEventListener("mouseenter", () => {
 			if (Number(layoutSelect.value) > 0) {
@@ -69,6 +69,7 @@
 		pages.forEach(page => {
 			const panel = page.querySelector(".panel");
 			addHoverInteractions(panel, layoutSelect);
+			// It seems listeners on removed pages are garbage collected
 		});
 
 		// Add doc & window listeners only on first load

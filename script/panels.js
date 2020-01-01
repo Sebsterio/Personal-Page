@@ -2,7 +2,7 @@
 	function handleTransitionEnd(e) {
 		// When .panel faded out, move it behind iframe
 		if (
-			e.propertyName == "opacity" &&
+			e.propertyName == "transform" &&
 			e.target.classList.contains("panel") &&
 			!e.target.classList.contains("visible")
 		) {

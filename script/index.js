@@ -3,16 +3,14 @@ function loadCatalog(catalog, pages, container, header, layoutSelect) {
 	container.innerHTML = "<h2>Loading content...</h2>";
 	pages.length = 0; // valid & safe
 	pages.push(...getPages(catalog));
-	renderPages(pages, container); // move to end?
+	renderPages(pages, container);
+	loadFirstFrames(pages);
 	setUpPanels(pages, header, layoutSelect);
-	setUpScroll(pages, container, layoutSelect);
 	updateLayout(null, container, layoutSelect, header);
-	setUpHeader(header, layoutSelect);
 }
 
 function loadDoc() {
 	const header = document.getElementById("header");
-	const navLinks = document.querySelectorAll(".nav-link");
 	const layoutSelect = document.getElementById("layout-select");
 	const container = document.getElementById("main-content");
 
@@ -22,18 +20,8 @@ function loadDoc() {
 	// Load home section on doc load
 	loadCatalog(Library.home, pages, container, header, layoutSelect);
 
-	// Change section in nav menu
-	navLinks.forEach(link => {
-		link.addEventListener("click", () => {
-			const catalog = Library[link.dataset.catalog];
-			loadCatalog(catalog, pages, container, header, layoutSelect);
-		});
-	});
-
-	// Change layout in UI
-	layoutSelect.addEventListener("change", e => {
-		updateLayout(e, container, layoutSelect, header);
-	});
+	setUpScroll(pages, container, layoutSelect);
+	setUpHeader(pages, container, header, layoutSelect);
 
 	// Window resize (includes orientationchange)
 	window.addEventListener("resize", () => {

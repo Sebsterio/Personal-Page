@@ -1,8 +1,16 @@
-// nav scroll
-// to scrol.js
+function shiftHeader(e, header) {
+	header.dataset.position = e.target.dataset.direction;
+}
+
+function updateMainBar(layoutSelect, header) {
+	if (layoutSelect.value === "0") {
+		// add class for cursor: pointer
+		//Text toggle: site title / "show details ( i )"
+		// TODO: mainBar to contain 2 text nodes. only one displayed at a time dependin gon class .extended
+	}
+}
 
 // ---------------------- Layout ------------------------
-// to layout.js
 
 // Update grid column width so that middle bar is always centered and (width: auto) and side-bars fill remaining space
 function setExtendedLayout(header) {
@@ -30,15 +38,30 @@ function updateHeaderLayout(header, isExtended) {
 	else setMobileLayout(header);
 }
 
-// -------------------- Shift header ------------------------
+// ------------------- Set up header ------------------------
 
-function shiftHeader(e, header) {
-	header.dataset.position = e.target.dataset.direction;
-}
-
-function setUpHeader(header, layoutSelect) {
+function setUpHeader(pages, container, header, layoutSelect) {
+	// Shift header sideways on icon click (in full-width view)
 	const icons = header.querySelectorAll(".header-icon");
 	icons.forEach(icon => {
 		icon.addEventListener("click", e => shiftHeader(e, header));
 	});
+
+	// Change webpage in nav menu
+	const navLinks = header.querySelectorAll(".nav-link");
+	navLinks.forEach(link => {
+		link.addEventListener("click", () => {
+			const catalog = Library[link.dataset.catalog];
+			loadCatalog(catalog, pages, container, header, layoutSelect);
+		});
+	});
+
+	// Change layout in UI
+	layoutSelect.addEventListener("change", e => {
+		updateLayout(e, container, layoutSelect, header);
+	});
+
+	// Toggle panel in full-view
+	const bar = header.querySelector(".main-bar");
+	bar.addEventListener("click", () => togglePanel(layoutSelect, null));
 }

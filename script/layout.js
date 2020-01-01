@@ -91,18 +91,16 @@
 			if (newRange !== currentRange) {
 				currentRange = newRange;
 				toggleDisabled(layoutSelect, !newRange);
-				// TODO: toggle header text: "Show details" / [Site Title]
 			}
 			updateHeaderLayout(header, !!newRange);
-
 			newLayout = newRange;
 			if (newRange && !isNaN(userLayout)) newLayout = userLayout;
-
 			layoutSelect.value = newLayout;
 		}
 
-		// Update page classes (layout) and iframe & panel sizes
+		// Update classes and iframe & panel sizes
 		const pageSizes = getPageSizes(containerSize, newLayout);
 		updatePages(container, newLayout, pageSizes);
+		updateMainBar(layoutSelect, header);
 	};
 })();

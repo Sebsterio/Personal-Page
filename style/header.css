@@ -79,7 +79,7 @@ header:not(.extended) h1 {
 
 .nav-bar {
 	justify-content: flex-start;
-	overflow-y: hidden;
+	overflow: hidden;
 	overflow-x: scroll;
 	/* hide horizontal scroll bar below header*/
 	height: 300px;

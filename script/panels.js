@@ -1,6 +1,6 @@
 (function() {
 	function handleTransitionEnd(e) {
-		// When .panel faded out, move it behind iframe
+		// When .panel slid out, move it behind iframe (legacy - originally it faded-out so had to be moved in z axis; keeping the code for now)
 		if (
 			e.propertyName == "transform" &&
 			e.target.classList.contains("panel") &&
@@ -78,9 +78,6 @@
 		// Add doc & window listeners only on first load
 		if (setUpPanels.isDone) return;
 		setUpPanels.isDone = true;
-
-		const bar = header.querySelector(".main-bar");
-		bar.addEventListener("click", () => togglePanel(layoutSelect, null));
 		document.addEventListener("transitionend", handleTransitionEnd);
 	};
 })();

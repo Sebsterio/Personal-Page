@@ -130,16 +130,14 @@
 		else if (e.data === "up") scrollPage(pages, 0);
 	}
 
-	window.setUpScroll = function(pages, container, layoutSelect) {
-		// load content in top page and adjacent ones
+	// load content in top page and adjacent ones
+	window.loadFirstFrames = function(pages) {
 		loadFrame(pages, pages.length);
 		loadFrame(pages, pages.length - 1);
 		loadFrame(pages, 1);
+	};
 
-		// Add doc & window listeners only on first load
-		if (setUpScroll.isDone) return;
-		setUpScroll.isDone = true;
-
+	window.setUpScroll = function(pages, container, layoutSelect) {
 		document.addEventListener("touchstart", handleTouchStart);
 		document.addEventListener("touchend", e =>
 			handleTouchEnd(e, pages, container, layoutSelect)

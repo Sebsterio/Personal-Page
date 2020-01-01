@@ -1,4 +1,8 @@
-// ----------------------- Layout ------------------------
+// nav scroll
+// to scrol.js
+
+// ---------------------- Layout ------------------------
+// to layout.js
 
 // Update grid column width so that middle bar is always centered and (width: auto) and side-bars fill remaining space
 function setExtendedLayout(header) {
@@ -26,7 +30,7 @@ function updateHeaderLayout(header, isExtended) {
 	else setMobileLayout(header);
 }
 
-// ----------------------- Shift header ------------------------
+// -------------------- Shift header ------------------------
 
 function shiftHeader(e, header) {
 	header.dataset.position = e.target.dataset.direction;

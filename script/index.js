@@ -5,7 +5,7 @@ function loadCatalog(catalog, pages, container, header, layoutSelect) {
 	pages.push(...getPages(catalog));
 	renderPages(pages, container); // move to end?
 	setUpPanels(pages, header, layoutSelect);
-	setUpScroll(pages);
+	setUpScroll(pages, container, layoutSelect);
 	updateLayout(null, container, layoutSelect, header);
 	setUpHeader(header, layoutSelect);
 }

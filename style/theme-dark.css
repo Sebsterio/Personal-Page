@@ -1,6 +1,11 @@
-header {
+.header-bg {
+	background-color: black;
 	background: linear-gradient(#fff, #fff, #ccc);
 }
+
+header {
+}
+
 header h1 {
 	color: #333;
 }

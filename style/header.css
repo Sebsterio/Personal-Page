@@ -1,3 +1,9 @@
+.header-bg {
+	position: absolute;
+	height: calc(32px + 6vmin);
+	width: 100%;
+}
+
 header {
 	position: relative;
 	height: calc(32px + 6vmin);
@@ -64,6 +70,7 @@ header h1 {
 	font-weight: 500;
 }
 
+/* TODO layout 0, not header:not.extended ! */
 header:not(.extended) h1 {
 	cursor: pointer;
 }
@@ -72,7 +79,10 @@ header:not(.extended) h1 {
 
 .nav-bar {
 	justify-content: flex-start;
-	overflow: hidden;
+	overflow-y: hidden;
+	overflow-x: scroll;
+	/* hide horizontal scroll bar below header*/
+	height: 300px;
 }
 
 .nav-link {
@@ -84,6 +94,14 @@ header:not(.extended) h1 {
 
 .nav-link:hover {
 	text-decoration: underline;
+}
+
+.nav-link[data-catalog=""],
+.nav-link[data-catalog=""]:hover {
+	color: #ccc;
+	text-decoration: none;
+	pointer-events: none;
+	/* cursor: not-allowed; */
 }
 
 /* ----- Options bar ----- */

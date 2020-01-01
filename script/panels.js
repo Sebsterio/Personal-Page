@@ -50,21 +50,24 @@
 		});
 	}
 
-	// toggle panel visiblity on header click in full-width layout
-	function handleBarclick(layoutSelect) {
+	// toggle panel visiblity in full-width layout
+	// doShow param used by functions that only either show or hide it
+	window.togglePanel = function(layoutSelect, doShow) {
+		//console.log(doShow);
 		if (layoutSelect.value === "0") {
 			const panel = document.querySelector(".page:not(.disabled) .panel");
-			if (panel.classList.contains("visible")) {
+			if (panel.classList.contains("visible" || doShow)) {
 				panel.classList.remove("visible");
 				// -> .on-top removed in handleTransitionEnd()
-			} else {
+			} else if (!panel.classList.contains("visible" || doShow === false)) {
 				panel.classList.add("on-top");
 				panel.classList.add("visible");
 				panel.classList.add("expanding");
 				panel.classList.add("hover");
 			}
 		}
-	}
+	};
+
 	window.setUpPanels = function(pages, header, layoutSelect) {
 		pages.forEach(page => {
 			const panel = page.querySelector(".panel");
@@ -77,7 +80,7 @@
 		setUpPanels.isDone = true;
 
 		const bar = header.querySelector(".main-bar");
-		bar.addEventListener("click", () => handleBarclick(layoutSelect));
+		bar.addEventListener("click", () => togglePanel(layoutSelect, null));
 		document.addEventListener("transitionend", handleTransitionEnd);
 	};
 })();

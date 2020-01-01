@@ -15,14 +15,16 @@
 <body>
 	<div class="app">
 
+		<!-- .header-bg needed as gradient background doesn't render outside of doc body when header is at 300% width, so all but first section end up white when moved into viw -->
+		<div class="header-bg"></div>
 		<header id="header">
 			<div class="header-col">
 				<nav class="header-section nav-bar">
-					<div class="nav-link" data-catalog="#">Home</div>
-					<div class="nav-link" data-catalog="#">Websites</div>
+					<div class="nav-link" data-catalog="home">Home</div>
+					<div class="nav-link" data-catalog="">Websites</div>
 					<div class="nav-link" data-catalog="JS30">Widgets</div>
-					<div class="nav-link" data-catalog="#">Apps</div>
-					<div class="nav-link" data-catalog="#">Games</div>
+					<div class="nav-link" data-catalog="">Apps</div>
+					<div class="nav-link" data-catalog="">Games</div>
 				</nav>
 				<img class="header-icon" data-direction="middle"
 					src="https://image.flaticon.com/icons/svg/271/271228.svg" alt="Right arrow icon">

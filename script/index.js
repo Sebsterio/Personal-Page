@@ -6,7 +6,7 @@ function loadCatalog(catalog, pages, container, header, layoutSelect) {
 	renderPages(pages, container);
 	loadFirstFrames(pages);
 	setUpPanels(pages, header, layoutSelect);
-	updateLayout(null, container, layoutSelect, header);
+	updateLayout(null, container, header, layoutSelect);
 }
 
 function loadDoc() {
@@ -20,12 +20,12 @@ function loadDoc() {
 	// Load home section on doc load
 	loadCatalog(Library.home, pages, container, header, layoutSelect);
 
-	setUpScroll(pages, container, layoutSelect);
+	setUpScroll(pages, container, header, layoutSelect);
 	setUpHeader(pages, container, header, layoutSelect);
 
 	// Window resize (includes orientationchange)
 	window.addEventListener("resize", () => {
-		updateLayout(null, container, layoutSelect, header);
+		updateLayout(null, container, header, layoutSelect);
 	});
 }
 

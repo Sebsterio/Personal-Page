@@ -75,7 +75,7 @@
 	let currentRange = 1;
 
 	// Update frame and panel size and layoutSelect options according to screen size
-	window.updateLayout = function(event, container, layoutSelect, header) {
+	window.updateLayout = function(event, container, header, layoutSelect) {
 		const containerSize = getContainerSize(container);
 		let newLayout;
 
@@ -98,9 +98,9 @@
 			layoutSelect.value = newLayout;
 		}
 
-		// Update classes and iframe & panel sizes
+		// Update classes and size of iframe and panel
 		const pageSizes = getPageSizes(containerSize, newLayout);
 		updatePages(container, newLayout, pageSizes);
-		updateMainBar(layoutSelect, header);
+		updateHeadline(layoutSelect, header);
 	};
 })();

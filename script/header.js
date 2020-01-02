@@ -2,17 +2,14 @@ function shiftHeader(e, header, btn) {
 	header.dataset.position = btn.dataset.direction;
 }
 
-function updateMainBar(layoutSelect, header) {
-	if (layoutSelect.value === "0") {
-		// add class for cursor: pointer
-		//Text toggle: site title / "show details ( i )"
-		// TODO: mainBar to contain 2 text nodes. only one displayed at a time dependin gon class .extended
-	}
+function updateHeadline(layoutSelect, header) {
+	if (layoutSelect.value === "0") header.classList.add("full-width");
+	else header.classList.remove("full-width");
 }
 
 // ---------------------- Layout ------------------------
 
-// Update grid column width so that middle col contains .headline withtout breaking and side cols fill remaining space
+// Middle col contains .headline without breaking; side cols fill remaining space
 function setExtendedLayout(header) {
 	header.classList.add("extended");
 
@@ -27,11 +24,13 @@ function setExtendedLayout(header) {
 	header.style.gridTemplateColumns = colSide + " " + colMiddle + " " + colSide;
 }
 
+// Each header column has full width
 function setMobileLayout(header) {
 	header.classList.remove("extended");
 	header.style.gridTemplateColumns = "100% 100% 100%";
 }
 
+// Update grid column width
 function updateHeaderLayout(header, isExtended) {
 	if (isExtended) setExtendedLayout(header);
 	else setMobileLayout(header);
@@ -40,13 +39,13 @@ function updateHeaderLayout(header, isExtended) {
 // ------------------- Set up header ------------------------
 
 function setUpHeader(pages, container, header, layoutSelect) {
-	// Shift header sideways on icon click (in full-width view)
+	// Header buttons - shift header sideways on icon click (full-width view)
 	const buttons = header.querySelectorAll(".header-btn");
 	buttons.forEach(btn => {
 		btn.addEventListener("click", e => shiftHeader(e, header, btn));
 	});
 
-	// Change webpage in nav menu
+	// Nav bar - change project catalog
 	const navLinks = header.querySelectorAll(".nav-btn");
 	navLinks.forEach(link => {
 		link.addEventListener("click", () => {
@@ -55,12 +54,12 @@ function setUpHeader(pages, container, header, layoutSelect) {
 		});
 	});
 
-	// Change layout in UI
+	// Main bar - toggle panel (full-width only)
+	const bar = header.querySelector(".main-bar");
+	bar.addEventListener("click", () => togglePanel(layoutSelect, null));
+
+	// Options bar - change main-content layout
 	layoutSelect.addEventListener("change", e => {
 		updateLayout(e, container, layoutSelect, header);
 	});
-
-	// Toggle panel in full-view
-	const bar = header.querySelector(".main-bar");
-	bar.addEventListener("click", () => togglePanel(layoutSelect, null));
 }

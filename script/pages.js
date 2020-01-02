@@ -3,6 +3,7 @@
 	function getPage(project) {
 		const page = document.createElement("div");
 		page.classList.add("page");
+		page.dataset.projectName = project.name;
 
 		// Save iframe src to be loaded dynamically on scroll
 		const frame = `

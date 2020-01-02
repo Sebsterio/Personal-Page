@@ -17,6 +17,23 @@
 		inset -6px 0 6px 0 var(--shine), inset 6px 0 6px 0 var(--shade);
 }
 
+.bulge {
+	cursor: pointer;
+	border: none;
+	padding: 10px 10px;
+	box-shadow: var(--bulge);
+}
+
+.bulge:active {
+	outline: none;
+	box-shadow: var(--dent);
+	transform: scale(0.9);
+}
+
+.bulge:focus {
+	outline: none;
+}
+
 /*******************************************
                   Header
  *******************************************/
@@ -29,20 +46,7 @@
 /* --------------- Header button --------------- */
 
 .header-btn {
-	cursor: pointer;
-	border: none;
-	padding: 10px 10px;
 	border-radius: 50%;
-	box-shadow: var(--bulge);
-}
-
-.header-btn:active {
-	outline: none;
-	box-shadow: var(--dent);
-	transform: scale(0.9);
-}
-.header-btn:focus {
-	outline: none;
 }
 
 .header-btn img {
@@ -52,21 +56,25 @@
 
 /* --------------- Main bar --------------- */
 
-.headline {
+.headline h1 {
 	padding: 12px 20px;
 	border-radius: 100px;
-	box-shadow: var(--bulge);
 
 	color: #333;
-}
-.headline h1 {
 	font-size: calc(6px + 2vmin);
 	font-weight: 500;
 }
 
-/* TODO layout 0, not header:not.extended ! */
-header:not(.extended) h1 {
+header.full-width .headline {
 	cursor: pointer;
+}
+
+header:not(.full-width) .headline-full-width {
+	display: none;
+}
+
+header.full-width .headline-split-width {
+	display: none;
 }
 
 /* --------------- Nav bar --------------- */

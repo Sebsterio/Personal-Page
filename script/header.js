@@ -47,7 +47,7 @@ function setUpHeader(pages, container, header, layoutSelect) {
 	});
 
 	// Change webpage in nav menu
-	const navLinks = header.querySelectorAll(".nav-li");
+	const navLinks = header.querySelectorAll(".nav-btn");
 	navLinks.forEach(link => {
 		link.addEventListener("click", () => {
 			const catalog = Library[link.dataset.catalog];

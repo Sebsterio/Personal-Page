@@ -68,11 +68,10 @@
 		}
 	};
 
-	window.setUpPanels = function(pages, header, layoutSelect) {
+	window.setUpPanels = function(pages, layoutSelect) {
 		pages.forEach(page => {
 			const panel = page.querySelector(".panel");
 			addHoverInteractions(panel, layoutSelect);
-			// It seems listeners on removed pages are garbage collected
 		});
 
 		// Add doc & window listeners only on first load

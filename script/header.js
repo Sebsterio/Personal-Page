@@ -1,12 +1,3 @@
-function shiftHeader(e, header, btn) {
-	header.dataset.position = btn.dataset.direction;
-}
-
-function updateHeadline(layoutSelect, header) {
-	if (layoutSelect.value === "0") header.classList.add("full-width");
-	else header.classList.remove("full-width");
-}
-
 // ---------------------- Layout ------------------------
 
 // Middle col contains .headline without breaking; side cols fill remaining space
@@ -37,6 +28,15 @@ function updateHeaderLayout(header, isExtended) {
 }
 
 // ------------------- Set up header ------------------------
+
+function updateHeadline(layoutSelect, header) {
+	if (layoutSelect.value === "0") header.classList.add("full-width");
+	else header.classList.remove("full-width");
+}
+
+function shiftHeader(e, header, btn) {
+	header.dataset.position = btn.dataset.direction;
+}
 
 function setUpHeader(pages, container, header, layoutSelect) {
 	// Header buttons - shift header sideways on icon click (full-width view)

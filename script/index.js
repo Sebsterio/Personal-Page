@@ -4,9 +4,9 @@ function loadCatalog(catalog, pages, container, header, layoutSelect) {
 	pages.length = 0; // valid & safe
 	pages.push(...getPages(catalog));
 	renderPages(pages, container);
-	loadFirstFrames(pages);
-	setUpPanels(pages, header, layoutSelect);
+	setUpPanels(pages, layoutSelect);
 	updateLayout(null, container, header, layoutSelect);
+	loadFirstFrames(pages);
 }
 
 function loadDoc() {

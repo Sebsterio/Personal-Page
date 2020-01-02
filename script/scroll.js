@@ -67,7 +67,7 @@
 		// Update header headline
 		const headlineProjectName = header.querySelector(".headline-project-name");
 		headlineProjectName.innerText = nextPage.dataset.projectName;
-		// TODO: updateHeaderLayout()
+		// TODO: updateHeaderLayout(isExtended)
 
 		// Close current page
 		const currentPage = getPage(pages, pages.length);
@@ -107,7 +107,7 @@
 			togglePanel(layoutSelect, false);
 		}
 		// Swiped within container
-		else {
+		else if (startedOnContainer && endedOnContainer) {
 			const touchendY = e.changedTouches[0].pageY;
 			const deltaY = touchendY - touchstartY;
 			if (deltaY < -SWIPE_SENSITIVITY) scrollPage(pages, header, 1);

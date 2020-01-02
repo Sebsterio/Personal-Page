@@ -1,12 +1,20 @@
+:root {
+	--header-height: calc(32px + 6vmin);
+}
+
+/* Needed as gradient background doesn't render outside of doc body when header is at 300% width, so all but first section end up white when moved back into viw */
 .header-bg {
 	position: absolute;
-	height: calc(32px + 6vmin);
+	height: var(--header-height);
 	width: 100%;
 }
 
+/* --------------------- Header -------------------- 
+   Mobile: width = 300%, shifted left/right with JS  */
+
 header {
 	position: relative;
-	height: calc(32px + 6vmin);
+	height: var(--header-height);
 	display: grid;
 	grid-template-columns: 100% 100% 100%;
 	transition: transform 300ms;
@@ -24,16 +32,13 @@ header:not(.extended)[data-position="right"] {
 	transform: translateX(-200%);
 }
 
-/* ----- Column ----- */
-
-.header-col,
-.header-section {
-	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
-}
+/* --------------- Column --------------- 
+   Horizontal distribution of sections; 
+   Width determined by JS                */
 
 .header-col {
+	display: flex;
+	flex-flow: row nowrap;
 	justify-content: space-between;
 	overflow: hidden;
 }
@@ -42,80 +47,54 @@ header.extended .header-col {
 	justify-content: center;
 }
 
-.header-col > * {
+/* -------------------- Section --------------------- 
+Horizontal padding & horizontally scrolled content
+(if wrapped in .header-section-wrapper)            */
+
+.header-section-wrapper {
+	overflow-y: hidden;
+	overflow-x: scroll;
+	/* Hide horizontal scroll bar below header's bottom edge */
+	height: 200px;
+	height: calc(var(--header-height) + 50px);
+}
+
+.header-section {
+	height: var(--header-height);
+	display: flex;
+	flex-flow: row nowrap;
+
 	padding: 0 16px;
 }
 
-/* ----- Icon ----- */
-
-.header-icon {
-	height: calc(16px + 2vmin);
-	cursor: pointer;
-}
-
-header.extended .header-icon {
+/* Button sections only visible in mobile view */
+header.extended .mobile-only {
 	display: none;
 }
 
-/* ----- Main bar ----- */
+/* ------------------------ Bar ------------------------
+   A horizontally-scrollable section that contains tiles */
 
-.main-bar {
+.header-col-left .header-bar {
+	justify-content: flex-start;
+}
+.header-col-middle .header-bar {
 	justify-content: center;
 }
 
-header h1 {
-	margin: 0;
-	padding: 0;
-	font-size: calc(16px + 2vmin);
-	font-weight: 500;
-}
-
-/* TODO layout 0, not header:not.extended ! */
-header:not(.extended) h1 {
-	cursor: pointer;
-}
-
-/* ----- Nav bar ----- */
-
-.nav-bar {
+.header-col-right .header-bar {
+	/* flex-end breaks horizontal scroll
+	TODO: scroll to end in JS */
 	justify-content: flex-start;
-	overflow: hidden;
-	overflow-x: scroll;
-	/* hide horizontal scroll bar below header*/
-	height: 300px;
 }
 
-.nav-link {
+/* ---------- Tile ------------
+   Vertically centered content  */
+
+.header-tile {
 	display: inline-block;
-	padding: 0 calc(8px + 0.5vmin);
-	font-size: calc(14px + 0.5vmin);
-	cursor: pointer;
-}
-
-.nav-link:hover {
-	text-decoration: underline;
-}
-
-.nav-link[data-catalog=""],
-.nav-link[data-catalog=""]:hover {
-	color: #ccc;
-	text-decoration: none;
-	pointer-events: none;
-	/* cursor: not-allowed; */
-}
-
-/* ----- Options bar ----- */
-
-.options-bar {
-	justify-content: flex-end;
-}
-
-header select {
-	display: inline-block;
-	margin: 0 calc(8px + 0.5vmin);
-	font-size: 16px;
-}
-
-select option:checked {
-	font-weight: bold;
+	height: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
 }

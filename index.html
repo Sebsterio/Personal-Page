@@ -15,38 +15,92 @@
 <body>
 	<div class="app">
 
-		<!-- .header-bg needed as gradient background doesn't render outside of doc body when header is at 300% width, so all but first section end up white when moved into viw -->
 		<div class="header-bg"></div>
 		<header id="header">
-			<div class="header-col">
-				<nav class="header-section nav-bar">
-					<div class="nav-link" data-catalog="home">Home</div>
-					<div class="nav-link" data-catalog="">Websites</div>
-					<div class="nav-link" data-catalog="JS30">Widgets</div>
-					<div class="nav-link" data-catalog="">Apps</div>
-					<div class="nav-link" data-catalog="">Games</div>
-				</nav>
-				<img class="header-icon" data-direction="middle"
-					src="https://image.flaticon.com/icons/svg/271/271228.svg" alt="Right arrow icon">
-			</div>
-			<div class="header-col">
-				<img class="header-icon" data-direction="left" src="https://image.flaticon.com/icons/svg/56/56763.svg"
-					alt="Nav menu icon">
-				<div class="header-section main-bar">
-					<h1>Work In Progress...</h1>
+
+			<!-- LEFT COL -->
+
+			<div class="header-col header-col-left ">
+				<div class="header-section-wrapper">
+					<nav class="header-section header-bar nav-bar">
+						<div class="header-tile">
+							<button class="nav-btn" data-catalog="home">Home</button>
+						</div>
+						<div class="header-tile">
+							<button class="nav-btn" data-catalog="">Websites</button>
+						</div>
+						<div class="header-tile">
+							<button class="nav-btn" data-catalog="JS30">Widgets</button>
+						</div>
+						<div class="header-tile">
+							<button class="nav-btn" data-catalog="">Apps</button>
+						</div>
+						<div class="header-tile">
+							<button class="nav-btn" data-catalog="">Games</button>
+						</div>
+					</nav>
 				</div>
-				<img class="header-icon" data-direction="right" src="https://image.flaticon.com/icons/svg/45/45128.svg"
-					alt="Options icon">
+
+				<div class="header-section mobile-only" data-direction="middle">
+					<div class="header-tile">
+						<button class="header-btn" data-direction="middle">
+							<img src="https://image.flaticon.com/icons/svg/271/271228.svg" alt="Right arrow icon">
+						</button>
+					</div>
+				</div>
 			</div>
-			<div class="header-col">
-				<img class="header-icon" data-direction="middle"
-					src="https://image.flaticon.com/icons/svg/271/271220.svg" alt="Left arrow icon">
-				<div class="header-section options-bar">
-					<select name="layout" id="layout-select">
-						<option value="0">Full Width</option>
-						<option value="1">Half Width</option>
-						<option value="2">Narrow Width</option>
-					</select>
+
+			<!-- MIDDLE COL -->
+
+			<div class="header-col header-col-middle">
+				<div class="header-section mobile-only">
+					<div class="header-tile">
+						<button class="header-btn" data-direction="left">
+							<img src="https://image.flaticon.com/icons/svg/56/56763.svg" alt="Nav menu icon">
+						</button>
+					</div>
+				</div class="header-section">
+
+				<div class="header-section header-bar main-bar">
+					<div class="header-tile">
+						<div class="header-row">
+							<div class="headline">
+								<h1>Work In Progress...</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="header-section mobile-only" data-direction="right">
+					<div class="header-tile">
+						<button class="header-btn" data-direction="right">
+							<img src="https://image.flaticon.com/icons/svg/45/45128.svg" alt="Options icon">
+						</button>
+					</div>
+				</div class="header-section">
+			</div>
+
+			<!-- RIGHT COL -->
+
+			<div class="header-col header-col-right">
+				<div class="header-section mobile-only" data-direction="middle">
+					<div class="header-tile">
+						<button class="header-btn" data-direction="middle">
+							<img src="https://image.flaticon.com/icons/svg/271/271220.svg" alt="Left arrow icon">
+						</button>
+					</div>
+				</div class="header-section">
+
+				<div class="header-section-wrapper">
+					<div class="header-section header-bar options-bar">
+						<div class="header-tile">
+							<select name="layout" id="layout-select">
+								<option value="0">Full Width</option>
+								<option value="1">Half Width</option>
+								<option value="2">Narrow Width</option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
 		</header>

@@ -1,5 +1,5 @@
-function shiftHeader(e, header) {
-	header.dataset.position = e.target.dataset.direction;
+function shiftHeader(e, header, btn) {
+	header.dataset.position = btn.dataset.direction;
 }
 
 function updateMainBar(layoutSelect, header) {
@@ -12,20 +12,19 @@ function updateMainBar(layoutSelect, header) {
 
 // ---------------------- Layout ------------------------
 
-// Update grid column width so that middle bar is always centered and (width: auto) and side-bars fill remaining space
+// Update grid column width so that middle col contains .headline withtout breaking and side cols fill remaining space
 function setExtendedLayout(header) {
 	header.classList.add("extended");
 
 	const mainBar = header.querySelector(".main-bar");
 	const headerWidth = parseInt(header.offsetWidth);
-	const mainBarWidth = parseInt(mainBar.offsetWidth);
+	const mainBarWidth = parseInt(mainBar.scrollWidth);
 	const newSideBarWidth = (headerWidth - mainBarWidth) / 2;
 
 	// Some padding seems needed to keep mainBar in one line when resizing window rapidly
-	const col1 = `${newSideBarWidth - 10}px`;
-	const col2 = `${mainBarWidth + 20}px`;
-	const col3 = `${newSideBarWidth - 10}px`;
-	header.style.gridTemplateColumns = col1 + " " + col2 + " " + col3;
+	const colSide = `${newSideBarWidth - 10}px`;
+	const colMiddle = `${mainBarWidth + 20}px`;
+	header.style.gridTemplateColumns = colSide + " " + colMiddle + " " + colSide;
 }
 
 function setMobileLayout(header) {
@@ -42,13 +41,13 @@ function updateHeaderLayout(header, isExtended) {
 
 function setUpHeader(pages, container, header, layoutSelect) {
 	// Shift header sideways on icon click (in full-width view)
-	const icons = header.querySelectorAll(".header-icon");
-	icons.forEach(icon => {
-		icon.addEventListener("click", e => shiftHeader(e, header));
+	const buttons = header.querySelectorAll(".header-btn");
+	buttons.forEach(btn => {
+		btn.addEventListener("click", e => shiftHeader(e, header, btn));
 	});
 
 	// Change webpage in nav menu
-	const navLinks = header.querySelectorAll(".nav-link");
+	const navLinks = header.querySelectorAll(".nav-li");
 	navLinks.forEach(link => {
 		link.addEventListener("click", () => {
 			const catalog = Library[link.dataset.catalog];

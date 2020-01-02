@@ -1,26 +1,138 @@
+:root {
+	/* colors */
+	--bg-main: #eee;
+	--bg-shade: #bbb;
+	--shine: rgba(255, 255, 255, 0.5);
+	--shade: rgba(0, 0, 0, 0.2);
+
+	/* small shadows */
+	--btn-out: inset 1px 1px 1px 0 var(--shine),
+		inset -1px -1px 1px 0 var(--shade);
+	--btn-in: inset 1px 1px 1px 0 var(--shade), inset -1px -1px 1px 0 var(--shine);
+
+	/* big shadows */
+	--bulge: 6px 0 6px 0 var(--shade), -6px 0 6px 0 var(--shine),
+		inset -6px 0 6px 0 var(--shade), inset 6px 0 6px 0 var(--shine);
+	--dent: 6px 0 6px 0 var(--shine), -6px 0 6px 0 var(--shade),
+		inset -6px 0 6px 0 var(--shine), inset 6px 0 6px 0 var(--shade);
+}
+
+/*******************************************
+                  Header
+ *******************************************/
+
 .header-bg {
-	background-color: black;
-	background: linear-gradient(#fff, #fff, #ccc);
+	background: var(--bg-main);
+	box-shadow: inset 0 -12px 12px -12px var(--shade);
 }
 
-header {
+/* --------------- Header button --------------- */
+
+.header-btn {
+	cursor: pointer;
+	border: none;
+	padding: 10px 10px;
+	border-radius: 50%;
+	box-shadow: var(--bulge);
 }
 
-header h1 {
+.header-btn:active {
+	outline: none;
+	box-shadow: var(--dent);
+	transform: scale(0.9);
+}
+.header-btn:focus {
+	outline: none;
+}
+
+.header-btn img {
+	height: calc(16px + 2vmin);
+	border-radius: 50%;
+}
+
+/* --------------- Main bar --------------- */
+
+.headline {
+	padding: 12px 20px;
+	border-radius: 100px;
+	box-shadow: var(--bulge);
+
 	color: #333;
 }
+.headline h1 {
+	margin: 0;
+	padding: 0;
+	font-size: calc(6px + 2vmin);
+	font-weight: 500;
+}
 
-.nav-link {
+/* TODO layout 0, not header:not.extended ! */
+header:not(.extended) h1 {
+	cursor: pointer;
+}
+
+/* --------------- Nav bar --------------- */
+
+.nav-btn {
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+	box-shadow: var(--btn-out);
+
+	margin: 0 6px;
+	padding: 12px calc(12px + 0.5vmin);
+	font-size: calc(14px + 0.5vmin);
+
 	color: #555;
+
+	/* trying */
+	border-radius: 100px;
+	box-shadow: var(--bulge);
 }
 
-.nav-link:hover {
+.nav-btn:hover {
 	color: black;
+	text-decoration: underline;
 }
 
-.nav-link:active {
-	text-shadow: 0 0 1px grey;
+.nav-btn:active {
+	border: none;
+	box-shadow: var(--btn-in);
+	background-color: rgba(0, 0, 0, 0.01);
+	transform: scale(0.98);
+
+	/* trying */
+	box-shadow: var(--dent);
+	transform: scale(0.95);
 }
+.nav-btn:focus {
+	outline: none;
+	background-color: rgba(0, 0, 0, 0.01);
+}
+
+.nav-btn[data-catalog=""],
+.nav-btn[data-catalog=""]:hover {
+	color: #ccc;
+	text-decoration: none;
+	pointer-events: none;
+	/* cursor: not-allowed; */
+}
+
+/* --------------- Options bar --------------- */
+
+header select {
+	display: inline-block;
+	margin: 0 calc(8px + 0.5vmin);
+	font-size: 16px;
+}
+
+select option:checked {
+	font-weight: bold;
+}
+
+/*******************************************
+                Main Content
+ *******************************************/
 
 .page {
 	background-color: white;

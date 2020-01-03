@@ -28,8 +28,8 @@ const home = [
 
 // "navLink": "catalog"
 const Library = {
-	home: ["Home", home], // <-------TODO: fix
-	//home: ["Widgets", JS30projects],
+	//home: ["Home", home], // <-------TODO: fix
+	home: ["Widgets", JS30projects],
 	featured: null,
 	widgets: ["Widgets", JS30projects]
 };

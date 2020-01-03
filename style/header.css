@@ -41,6 +41,7 @@ header:not(.screen-is-wide)[data-position="right"] {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
+	overflow-x: visible;
 }
 
 header.screen-is-wide .header-col {
@@ -109,4 +110,8 @@ header.show-project-name .headline-catalog-name {
 /* In split-width view, hide Project Name */
 header:not(.show-project-name) .headline-project-name {
 	display: none;
+}
+
+.headline {
+	text-align: center;
 }

@@ -61,6 +61,7 @@
 
 /* --------------- Main bar --------------- */
 
+/* side-col buttons appear to merge into middle col when scrolled-x */
 header.screen-is-wide .header-col-middle {
 	box-shadow: var(--bulge);
 	border-radius: 6px / calc(var(--header-height) / 2);

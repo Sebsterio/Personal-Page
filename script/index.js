@@ -10,12 +10,13 @@ const config = {
 function loadCatalog(catalog, pages, layout, dom) {
 	dom.container.innerHTML = "<h2>Loading content...</h2>";
 	pages.length = 0; // valid & safe
-	pages.push(...getPages(catalog));
+	pages.push(...getPages(catalog[1]));
 	renderPages(pages, dom.container);
 	setUpPanels(pages, dom.layoutSelect);
 	updateLayout(layout, config, dom);
 	loadFirstFrames(pages);
-	updateHeadline(pages[0], dom.header, "project");
+	updateHeadline("catalog", catalog[0], dom.header);
+	updateHeadline("project", pages[0], dom.header);
 }
 
 (function initApp(config) {

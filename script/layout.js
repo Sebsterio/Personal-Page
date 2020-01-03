@@ -57,21 +57,23 @@
 
 	// ---------------------- Header ------------------------
 
-	window.updateHeaderColumWidth = function(header, screenIsWide) {
-		// Hanlde function call in scroll.js
-		if (screenIsWide === null) {
-			screenIsWide = header.classList.contains("screen-is-wide");
-		}
-		// Desktop - Middle col contains .headline without breaking; side cols fill remaining space
+	window.updateHeaderColumWidth = function(header) {
+		const screenIsWide = header.classList.contains("screen-is-wide");
+
+		// Desktop
+		// Middle col contains headline without breaking; side cols fill remaining space
 		if (screenIsWide) {
+			// ensure headline text doesn't break when taking its width
+			header.style.gridTemplateColumns = "0 100% 0";
+
 			const mainBar = header.querySelector(".main-bar");
 			const headerWidth = parseInt(header.offsetWidth);
 			const mainBarWidth = parseInt(mainBar.scrollWidth);
 			const newSideBarWidth = (headerWidth - mainBarWidth) / 2;
 
 			// Some padding seems needed to keep mainBar in one line when resizing window rapidly
-			const colSide = `${newSideBarWidth - 10}px`;
-			const colMiddle = `${mainBarWidth + 20}px`;
+			const colSide = `${newSideBarWidth - 2}px`;
+			const colMiddle = `${mainBarWidth + 4}px`;
 			header.style.gridTemplateColumns =
 				colSide + " " + colMiddle + " " + colSide;
 		}
@@ -109,7 +111,7 @@
 		const pageSizes = getPageSizes(containerSize, newLayout, config);
 		updatePages(dom.container, newLayout, pageSizes);
 		toggleHeadlineText(newLayout, dom.header);
-		if (newLayout > 0) updateHeaderColumWidth(dom.header, true);
+		updateHeaderColumWidth(dom.header);
 	}
 
 	// Set layout to userLayout
@@ -134,6 +136,5 @@
 		const newLayout = getLayout(screenIsWide, userLayout);
 		dom.layoutSelect.value = newLayout;
 		setLayout(containerSize, newLayout, dom, config);
-		updateHeaderColumWidth(dom.header, screenIsWide);
 	};
 })();

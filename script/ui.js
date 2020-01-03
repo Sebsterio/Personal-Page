@@ -5,9 +5,11 @@ function toggleHeadlineText(layout, header) {
 }
 
 // Update headline text with project/catalog name
-function updateHeadline(page, header, whichHeadline) {
+function updateHeadline(whichHeadline, source, header) {
 	let headline = header.querySelector(`.headline-${whichHeadline}-name`);
-	headline.innerText = page.dataset.projectName;
+
+	headline.innerText =
+		whichHeadline == "project" ? source.dataset.projectName : source;
 
 	// Update colum width to match headline text
 	updateHeaderColumWidth(header, null);

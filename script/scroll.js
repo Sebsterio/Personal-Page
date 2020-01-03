@@ -64,7 +64,7 @@
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
 
-		updateHeadline(nextPage, dom.header, "project");
+		updateHeadline("project", nextPage, dom.header);
 
 		// Close current page
 		const currentPage = getPage(pages, pages.length);
@@ -97,11 +97,11 @@
 
 		// Swiped from header down
 		if (!startedOnContainer && endedOnContainer) {
-			togglePanel(layoutSelect, true);
+			togglePanel(dom.layoutSelect, true);
 		}
 		// Swiped from container to header
 		else if (startedOnContainer && !endedOnContainer) {
-			togglePanel(layoutSelect, false);
+			togglePanel(dom.layoutSelect, false);
 		}
 		// Swiped within container
 		else if (startedOnContainer && endedOnContainer) {

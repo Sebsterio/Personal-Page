@@ -1,9 +1,12 @@
 :root {
 	/* colors */
-	--bg-main: #eee;
+	--bg-main: #e7e7e7;
 	--bg-shade: #bbb;
-	--shine: rgba(255, 255, 255, 0.5);
+	--shine: rgba(255, 255, 255, 1);
 	--shade: rgba(0, 0, 0, 0.2);
+
+	/* gradient */
+	--bg-gradient: linear-gradient(white, white, var(--bg-shade), #888);
 
 	/* small shadows */
 	--btn-out: inset 1px 1px 1px 0 var(--shine),
@@ -22,6 +25,7 @@
 	border: none;
 	padding: 10px 10px;
 	box-shadow: var(--bulge);
+	text-shadow: 1px 0px 2px var(--shine), -1px 0px 2px var(--shade);
 }
 
 .bulge:active {
@@ -40,6 +44,7 @@
 
 .header-bg {
 	background: var(--bg-main);
+	background: var(--bg-gradient);
 	box-shadow: inset 0 -4px 4px 0 var(--shade);
 }
 
@@ -56,6 +61,10 @@
 
 /* --------------- Main bar --------------- */
 
+header.screen-is-wide .header-col-middle {
+	/* apperaing above rest of header in z axis? so that x-scrolled buttons appear to slide undreneath it */
+}
+
 .headline h1 {
 	padding: 12px 20px;
 	border-radius: 100px;
@@ -65,23 +74,10 @@
 	font-weight: 500;
 }
 
-header.full-width .headline {
-	cursor: pointer;
-}
-
-header:not(.full-width) .headline-full-width {
-	display: none;
-}
-
-header.full-width .headline-split-width {
-	display: none;
-}
-
 /* --------------- Nav bar --------------- */
 
 .nav-btn {
 	border: none;
-	cursor: pointer;
 	border-radius: 4px;
 	box-shadow: var(--btn-out);
 
@@ -118,10 +114,9 @@ header.full-width .headline-split-width {
 
 .nav-btn[data-catalog=""],
 .nav-btn[data-catalog=""]:hover {
-	color: #ccc;
+	color: #969696;
 	text-decoration: none;
 	pointer-events: none;
-	/* cursor: not-allowed; */
 }
 
 /* --------------- Options bar --------------- */

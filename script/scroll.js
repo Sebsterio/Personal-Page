@@ -1,4 +1,13 @@
 (function() {
+	function updateHeader(page, header) {
+		// Update headline text with project name
+		const headline = header.querySelector(".headline-project-name");
+		headline.innerText = page.dataset.projectName;
+
+		// Update colum width to match headline text
+		updateHeaderColumWidth(header);
+	}
+
 	// ------------------- transitionend ---------------------
 
 	// Let iframe GET its content
@@ -64,10 +73,7 @@
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
 
-		// Update header headline
-		const headlineProjectName = header.querySelector(".headline-project-name");
-		headlineProjectName.innerText = nextPage.dataset.projectName;
-		// TODO: updateHeaderLayout(isExtended)
+		updateHeader(nextPage, header);
 
 		// Close current page
 		const currentPage = getPage(pages, pages.length);

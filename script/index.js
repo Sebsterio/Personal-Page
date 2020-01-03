@@ -1,32 +1,42 @@
+const config = {
+	// Minimum screen width for 2-col layout
+	threshold: 800,
+
+	// iframe width in "mobile screen" layout
+	narrow: 400
+};
+
 // Populate #main-content with projects and set up UI
-function loadCatalog(catalog, pages, container, header, layoutSelect) {
-	container.innerHTML = "<h2>Loading content...</h2>";
+function loadCatalog(catalog, pages, layout, dom) {
+	dom.container.innerHTML = "<h2>Loading content...</h2>";
 	pages.length = 0; // valid & safe
 	pages.push(...getPages(catalog));
-	renderPages(pages, container);
-	setUpPanels(pages, layoutSelect);
-	updateLayout(null, container, header, layoutSelect);
+	renderPages(pages, dom.container);
+	setUpPanels(pages, dom.layoutSelect);
+	updateLayout(layout, config, dom);
 	loadFirstFrames(pages);
 }
 
-function loadDoc() {
+(function initApp(config) {
+	const dom = {
+		container: document.getElementById("main-content"),
+		header: document.getElementById("header"),
+		layoutSelect: document.getElementById("layout-select")
+	};
+	const container = document.getElementById("main-content");
 	const header = document.getElementById("header");
 	const layoutSelect = document.getElementById("layout-select");
-	const container = document.getElementById("main-content");
 
-	// Declare once and mutate on loadCatalog() instead of redeclaring so that event listeners that take it as parameter can be declared only once
-	let pages = [];
+	let pages = []; //
 
-	// Load home section on doc load
-	loadCatalog(Library.home, pages, container, header, layoutSelect);
+	const layout = {
+		screenIsWide: null, // container.width > threshold ? 1 : 0
+		userLayout: -1 // Layout selected by user
+	};
 
 	setUpScroll(pages, container, header, layoutSelect);
-	setUpHeader(pages, container, header, layoutSelect);
+	setUpUI(pages, layout, dom);
 
-	// Window resize (includes orientationchange)
-	window.addEventListener("resize", () => {
-		updateLayout(null, container, header, layoutSelect);
-	});
-}
-
-loadDoc();
+	// Load home section on doc load
+	loadCatalog(Library.home, pages, layout, dom);
+})(config);

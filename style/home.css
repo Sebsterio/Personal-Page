@@ -1,0 +1,31 @@
+body {
+	font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+h1,
+h2 {
+	text-align: center;
+}
+
+h2 {
+	color: grey;
+	font-weight: 400;
+}
+
+ol {
+	margin-top: 50px;
+}
+
+li {
+	font-size: 20px;
+	margin: 20px 0;
+}
+
+span {
+	font-size: 18px;
+	color: grey;
+}
+
+p {
+	margin: 30px 60px;
+}

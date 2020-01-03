@@ -121,12 +121,12 @@
 		setLayout(containerSize, layout.userLayout, dom, config);
 	};
 
-	// on resize | initApp()
+	// On resize | initApp()
 	window.updateLayout = function({ screenIsWide, userLayout }, config, dom) {
 		const containerSize = getContainerSize(dom.container);
 		let newScreenIsWide = containerSize.width >= config.threshold;
 
-		// at resize boundry | initApp()
+		// At resize boundry | initApp()
 		if (newScreenIsWide !== screenIsWide) {
 			screenIsWide = newScreenIsWide;
 			toggleDisabledLayoutOptions(dom.layoutSelect, !screenIsWide);

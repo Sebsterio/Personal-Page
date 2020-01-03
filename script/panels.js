@@ -32,7 +32,7 @@
 		}
 	}
 
-	// display .panel-p on .panel:hover
+	// Display .panel-p on .panel:hover
 	function addHoverInteractions(panel, layoutSelect) {
 		panel.addEventListener("mouseenter", () => {
 			if (Number(layoutSelect.value) > 0) {
@@ -50,7 +50,7 @@
 		});
 	}
 
-	// toggle panel visiblity in full-width layout
+	// Toggle panel visiblity in full-width layout
 	// doShow param used by functions that only either show or hide it
 	window.togglePanel = function(layoutSelect, doShow) {
 		//console.log(doShow);

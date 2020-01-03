@@ -19,9 +19,16 @@ const JS30projects = JS30folders.map(folderName => ({
 		"/index.html"
 }));
 
+const home = [
+	{
+		name: "Home",
+		url: "../home.html"
+	}
+];
+
 const Library = {
 	// "navLink": "catalog"
-	home: ["Home", JS30projects],
+	home: ["Home", home],
 	featured: null,
 	widgets: ["Widgets", JS30projects]
 };

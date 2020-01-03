@@ -55,6 +55,8 @@
 	}
 
 	function scrollPage(pages, dom, increment) {
+		if (pages.length === 1) return;
+
 		// Communicate with handlePageTransitionEnd()
 		scrollPage.ready = false;
 		scrollPage.increment = increment;
@@ -130,6 +132,7 @@
 	// load content in top page and adjacent ones
 	window.loadFirstFrames = function(pages) {
 		loadFrame(pages, pages.length);
+		if (pages.length === 1) return;
 		loadFrame(pages, pages.length - 1);
 		loadFrame(pages, 1);
 	};

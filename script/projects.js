@@ -22,7 +22,7 @@ const JS30projects = JS30folders.map(folderName => ({
 const home = [
 	{
 		name: "Home",
-		url: "../home.html"
+		url: "../home-page/home.html"
 	}
 ];
 

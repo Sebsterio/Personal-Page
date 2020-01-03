@@ -15,6 +15,7 @@ function loadCatalog(catalog, pages, layout, dom) {
 	setUpPanels(pages, dom.layoutSelect);
 	updateLayout(layout, config, dom);
 	loadFirstFrames(pages);
+	updateHeadline(pages[0], dom.header, "project");
 }
 
 (function initApp(config) {
@@ -23,18 +24,15 @@ function loadCatalog(catalog, pages, layout, dom) {
 		header: document.getElementById("header"),
 		layoutSelect: document.getElementById("layout-select")
 	};
-	const container = document.getElementById("main-content");
-	const header = document.getElementById("header");
-	const layoutSelect = document.getElementById("layout-select");
 
-	let pages = []; //
+	let pages = [];
 
 	const layout = {
-		screenIsWide: null, // container.width > threshold ? 1 : 0
-		userLayout: -1 // Layout selected by user
+		screenIsWide: null, // container.width > threshold
+		userLayout: -1 // Layout selected by user: 0 | 1 | 2
 	};
 
-	setUpScroll(pages, container, header, layoutSelect);
+	setUpScroll(pages, dom);
 	setUpUI(pages, layout, dom);
 
 	// Load home section on doc load

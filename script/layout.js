@@ -58,6 +58,10 @@
 	// ---------------------- Header ------------------------
 
 	window.updateHeaderColumWidth = function(header, screenIsWide) {
+		// Hanlde function call in scroll.js
+		if (screenIsWide === null) {
+			screenIsWide = header.classList.contains("screen-is-wide");
+		}
 		// Desktop - Middle col contains .headline without breaking; side cols fill remaining space
 		if (screenIsWide) {
 			const mainBar = header.querySelector(".main-bar");
@@ -98,7 +102,7 @@
 	// Turn screenIsWide into newLayout, considering userLayout
 	function getLayout(screenIsWide, userLayout) {
 		if (screenIsWide && userLayout > -1) return userLayout;
-		else return screenIsWide;
+		else return Number(screenIsWide);
 	}
 
 	function setLayout(containerSize, newLayout, dom, config) {
@@ -108,27 +112,28 @@
 		if (newLayout > 0) updateHeaderColumWidth(dom.header, true);
 	}
 
+	// Set layout to userLayout
 	window.handleLayoutSelectChange = function(e, layout, config, dom) {
 		const containerSize = getContainerSize(dom.container);
-		let newLayout = Number(e.target.value);
-		layout.userLayout = newLayout;
-		setLayout(containerSize, newLayout, dom, config);
+		layout.userLayout = Number(e.target.value);
+		setLayout(containerSize, layout.userLayout, dom, config);
 	};
 
+	// on resize | initApp()
 	window.updateLayout = function({ screenIsWide, userLayout }, config, dom) {
 		const containerSize = getContainerSize(dom.container);
-		let newWidthRange = containerSize.width >= config.threshold ? 1 : 0;
+		let newScreenIsWide = containerSize.width >= config.threshold;
 
 		// at resize boundry | initApp()
-		if (newWidthRange !== screenIsWide) {
-			screenIsWide = newWidthRange;
+		if (newScreenIsWide !== screenIsWide) {
+			screenIsWide = newScreenIsWide;
 			toggleDisabledLayoutOptions(dom.layoutSelect, !screenIsWide);
-			updateHeaderLayout(dom.header, !!screenIsWide);
+			updateHeaderLayout(dom.header, screenIsWide);
 		}
 
 		const newLayout = getLayout(screenIsWide, userLayout);
 		dom.layoutSelect.value = newLayout;
-		setLayout(containerSize, newLayout, dom, config.narrow);
+		setLayout(containerSize, newLayout, dom, config);
 		updateHeaderColumWidth(dom.header, screenIsWide);
 	};
 })();

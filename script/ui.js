@@ -1,12 +1,24 @@
+// Switch between showing project name and catalog name in headline
 function toggleHeadlineText(layout, header) {
 	if (layout === 0) header.classList.add("show-project-name");
 	else header.classList.remove("show-project-name");
 }
 
+// Update headline text with project/catalog name
+function updateHeadline(page, header, whichHeadline) {
+	let headline = header.querySelector(`.headline-${whichHeadline}-name`);
+	headline.innerText = page.dataset.projectName;
+
+	// Update colum width to match headline text
+	updateHeaderColumWidth(header, null);
+}
+
+// Move header sideways on button click
 function shiftHeader(e, header, btn) {
 	header.dataset.position = btn.dataset.direction;
 }
 
+// ad UI event listeners
 function setUpUI(pages, layout, dom) {
 	// Header buttons - shift header sideways on icon click (full-width view)
 	const buttons = dom.header.querySelectorAll(".header-btn");

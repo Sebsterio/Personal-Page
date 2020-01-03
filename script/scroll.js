@@ -1,13 +1,4 @@
 (function() {
-	function updateHeader(page, header) {
-		// Update headline text with project name
-		const headline = header.querySelector(".headline-project-name");
-		headline.innerText = page.dataset.projectName;
-
-		// Update colum width to match headline text
-		updateHeaderColumWidth(header);
-	}
-
 	// ------------------- transitionend ---------------------
 
 	// Let iframe GET its content
@@ -54,7 +45,7 @@
 		}
 	}
 
-	// --------------------- scroll page ----------------------
+	// --------------------- Scroll page ----------------------
 
 	// Retrieve page with a given zIndex
 	function getPage(pages, zIndex) {
@@ -63,7 +54,7 @@
 		})[0];
 	}
 
-	function scrollPage(pages, header, increment) {
+	function scrollPage(pages, dom, increment) {
 		// Communicate with handlePageTransitionEnd()
 		scrollPage.ready = false;
 		scrollPage.increment = increment;
@@ -73,12 +64,12 @@
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
 
-		updateHeader(nextPage, header);
+		updateHeadline(nextPage, dom.header, "project");
 
 		// Close current page
 		const currentPage = getPage(pages, pages.length);
 		currentPage.classList.add("closing");
-		// -> continued in handlePageTransitionEnd(header, isExtended)
+		// -> continued in handlePageTransitionEnd()
 	}
 
 	// Debounce scroll
@@ -96,13 +87,13 @@
 		touchstartY = e.touches[0].pageY;
 	}
 
-	function handleTouchEnd(e, pages, container, header, layoutSelect) {
+	function handleTouchEnd(e, pages, dom) {
 		const touchEndElement = document.elementFromPoint(
 			e.changedTouches[0].clientX,
 			e.changedTouches[0].clientY
 		);
-		const startedOnContainer = !!e.target.closest("#" + container.id);
-		const endedOnContainer = !!touchEndElement.closest("#" + container.id);
+		const startedOnContainer = !!e.target.closest("#" + dom.container.id);
+		const endedOnContainer = !!touchEndElement.closest("#" + dom.container.id);
 
 		// Swiped from header down
 		if (!startedOnContainer && endedOnContainer) {
@@ -116,24 +107,24 @@
 		else if (startedOnContainer && endedOnContainer) {
 			const touchendY = e.changedTouches[0].pageY;
 			const deltaY = touchendY - touchstartY;
-			if (deltaY < -SWIPE_SENSITIVITY) scrollPage(pages, header, 1);
-			else if (deltaY > SWIPE_SENSITIVITY) scrollPage(pages, header, 0);
+			if (deltaY < -SWIPE_SENSITIVITY) scrollPage(pages, dom, 1);
+			else if (deltaY > SWIPE_SENSITIVITY) scrollPage(pages, dom, 0);
 		}
 	}
 
-	function handleWheel(e, pages, container, header) {
+	function handleWheel(e, pages, dom) {
 		// Check if mouse is over container
-		if (!!e.target.closest("#" + container.id)) {
+		if (!!e.target.closest("#" + dom.container.id)) {
 			// Avoid trackpad scroll inertia
-			if (e.deltaY > SCROLL_SENSITIVITY) scrollPage(pages, header, 1);
-			else if (e.deltaY < -SCROLL_SENSITIVITY) scrollPage(pages, header, 0);
+			if (e.deltaY > SCROLL_SENSITIVITY) scrollPage(pages, dom, 1);
+			else if (e.deltaY < -SCROLL_SENSITIVITY) scrollPage(pages, dom, 0);
 		}
 	}
 
 	// Handle message from iframe
-	function handleeMessage(e, pages, header) {
-		if (e.data === "down") scrollPage(pages, header, 1);
-		else if (e.data === "up") scrollPage(pages, header, 0);
+	function handleeMessage(e, pages, dom) {
+		if (e.data === "down") scrollPage(pages, dom, 1);
+		else if (e.data === "up") scrollPage(pages, dom, 0);
 	}
 
 	// load content in top page and adjacent ones
@@ -143,15 +134,12 @@
 		loadFrame(pages, 1);
 	};
 
-	window.setUpScroll = function(pages, container, header, layoutSelect) {
+	// Add scroll-related event listeners
+	window.setUpScroll = function(pages, dom) {
 		document.addEventListener("touchstart", handleTouchStart);
-		document.addEventListener("touchend", e =>
-			handleTouchEnd(e, pages, container, header, layoutSelect)
-		);
-		document.addEventListener("wheel", e =>
-			handleWheel(e, pages, container, header)
-		);
-		window.addEventListener("message", e => handleeMessage(e, pages, header));
+		document.addEventListener("touchend", e => handleTouchEnd(e, pages, dom));
+		document.addEventListener("wheel", e => handleWheel(e, pages, dom));
+		window.addEventListener("message", e => handleeMessage(e, pages, dom));
 		document.addEventListener("transitionend", e =>
 			handlePageTransitionEnd(e, pages, scrollPage.increment)
 		);

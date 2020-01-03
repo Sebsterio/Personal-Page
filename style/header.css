@@ -37,10 +37,10 @@ header:not(.screen-is-wide)[data-position="right"] {
    Width determined by JS                */
 
 .header-col {
+	height: var(--header-height);
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	overflow: hidden;
 }
 
 header.screen-is-wide .header-col {
@@ -101,22 +101,12 @@ header.screen-is-wide .mobile-only {
 
 /* --------------- Headline --------------- */
 
-/* full-width view */
-
-header.show-project-name .headline {
-	cursor: pointer;
-}
-
-header.show-project-name .headline-site-name {
+/* In full-width view, hide Site Name */
+header.show-project-name .headline-catalog-name {
 	display: none;
 }
 
-/* split-width view */
-
-header:not(.show-project-name) .headline {
-	cursor: default !important;
-}
-
+/* In split-width view, hide Project Name */
 header:not(.show-project-name) .headline-project-name {
 	display: none;
 }

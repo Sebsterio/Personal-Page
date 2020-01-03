@@ -6,7 +6,7 @@
 	--shade: rgba(0, 0, 0, 0.2);
 
 	/* gradient */
-	--bg-gradient: linear-gradient(white, white, var(--bg-shade), #888);
+	--bg-gradient: linear-gradient(var(--bg-main), var(--bg-main), #888);
 
 	/* small shadows */
 	--btn-out: inset 1px 1px 1px 0 var(--shine),
@@ -62,16 +62,21 @@
 /* --------------- Main bar --------------- */
 
 header.screen-is-wide .header-col-middle {
-	/* apperaing above rest of header in z axis? so that x-scrolled buttons appear to slide undreneath it */
+	box-shadow: var(--bulge);
+	border-radius: 6px / calc(var(--header-height) / 2);
+	/* hide weird glare on bottom edge */
+	height: calc(var(--header-height) - 2px);
 }
 
 .headline h1 {
 	padding: 12px 20px;
 	border-radius: 100px;
 
-	color: #333;
 	font-size: calc(6px + 2vmin);
 	font-weight: 500;
+
+	color: #333;
+	text-shadow: 1px 0px 2px var(--shine), -1px 0px 2px var(--shade);
 }
 
 /* --------------- Nav bar --------------- */

@@ -37,5 +37,7 @@ function loadCatalog(catalog, pages, layout, dom) {
 	setUpUI(pages, layout, dom);
 
 	// Load home section on doc load
-	loadCatalog(Library.home, pages, layout, dom);
+	// loadCatalog(Library.home, pages, layout, dom);
+	// temp !!!
+	loadCatalog(Library.widgets, pages, layout, dom);
 })(config);

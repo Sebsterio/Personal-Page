@@ -22,13 +22,14 @@ const JS30projects = JS30folders.map(folderName => ({
 const home = [
 	{
 		name: "Home",
-		url: "../home-page/home.html"
+		url: "../home.html"
 	}
 ];
 
+// "navLink": "catalog"
 const Library = {
-	// "navLink": "catalog"
-	home: ["Home", home],
+	home: ["Home", home], // <-------TODO: fix
+	//home: ["Widgets", JS30projects],
 	featured: null,
 	widgets: ["Widgets", JS30projects]
 };

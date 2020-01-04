@@ -32,20 +32,29 @@
 		}
 	}
 
+	function switchPanel(panel, activate) {
+		//if (!body.classList.container('full-width')) return
+		if (activate) {
+			panel.classList.add("expanding");
+			panel.classList.add("hover");
+			// -> transitionend adds class .expanded
+		} else {
+			panel.classList.remove("expanding");
+			panel.classList.remove("expanded");
+			// -> transitionend removes class .hover
+		}
+	}
+
 	// Display .panel-p on .panel:hover
 	function addHoverInteractions(panel, layoutSelect) {
 		panel.addEventListener("mouseenter", () => {
 			if (Number(layoutSelect.value) > 0) {
-				panel.classList.add("expanding");
-				panel.classList.add("hover");
-				// -> transitionend adds class .expanded
+				switchPanel(panel, true);
 			}
 		});
 		panel.addEventListener("mouseleave", () => {
 			if (Number(layoutSelect.value) > 0) {
-				panel.classList.remove("expanding");
-				panel.classList.remove("expanded");
-				// -> transitionend removes class .hover
+				switchPanel(panel, false);
 			}
 		});
 	}

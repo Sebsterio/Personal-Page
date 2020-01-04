@@ -1,7 +1,5 @@
 #main-content,
-.page,
-.page.full-width iframe,
-.page.full-width .panel {
+.page {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -10,17 +8,14 @@
 	/* overflow: hidden; */
 }
 
+/* fallback message 'Loading content...' */
 #main-content {
-	/* fallback message 'Loading content...' */
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
 .page {
-	display: flex;
-	flex-flow: row nowrap;
-
 	opacity: 1;
 	transition: opacity 400ms;
 }
@@ -37,11 +32,35 @@
 }
 
 /*******************************************
-                   PANEL
+                .page content
  *******************************************/
 
+/* ----- Split-view (desktop only) ----- */
+
+.page {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.project,
 .panel {
-	flex: 1 1 auto;
+	flex: 0 0 50%;
+}
+
+.project {
+	position: relative;
+}
+
+iframe {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	/* overflow: hidden; */
+}
+
+.panel {
 	overflow: hidden;
 
 	/* Panel toggle */
@@ -55,25 +74,41 @@
 	justify-content: center;
 }
 
-/* Toggle panel on header click (full-width only) */
+/* ----- Full-width view (desktop & mobile) ----- */
 
-.page.full-width iframe {
+body.full-width .project,
+body.full-width .panel {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	/* overflow: hidden; */
+}
+
+/* Toggle panel on header click */
+
+body.full-width iframe {
 	z-index: 0;
 }
 
-.page.full-width .panel {
+body.full-width .panel {
 	z-index: -1;
 	/* opacity: 0; */
 	transform: translateY(-100%);
 }
 
-.page.full-width .panel.on-top {
+body.full-width .panel.on-top {
 	z-index: 1;
 }
-.page.full-width .panel.visible {
+body.full-width .panel.visible {
 	/* opacity: 1; */
 	transform: translateY(0);
 }
+
+/*******************************************
+                PANEL CONTENT
+ *******************************************/
 
 /* Toggle details on panel hover (split-width) and toggle (full-width) */
 
@@ -119,17 +154,4 @@
 .panel.expanded .slide-in-left {
 	transform: translateX(0);
 	opacity: 1;
-}
-
-/*******************************************
-                PANEL CONTENT
- *******************************************/
-
-.panel h1 {
-	font-size: 3em;
-	font-weight: 400;
-}
-
-.panel p {
-	font-size: 1.5em;
 }

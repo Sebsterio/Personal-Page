@@ -7,15 +7,17 @@
 
 		// Save iframe src to be loaded dynamically on scroll
 		const frame = `
-			<iframe src="" 
-			data-src="${project.url}" 
-			width="0" 
-			height="0" 
-			frameborder="0"
-			>
-			<!-- fallback -->
-			<a href="${project.url}">${project.name}</a>
-			</iframe>	
+			<div class="project">
+				<iframe src="" 
+					data-src="${project.url}" 
+					width="0" 
+					height="0" 
+					frameborder="0"
+				>
+				<!-- fallback -->
+					<a href="${project.url}">${project.name}</a>
+				</iframe>
+			</div>
 		`;
 
 		// .panel-p-main is targeted by transitionend listener to avoid firing multiple times when there are several .panel-p elements
@@ -33,8 +35,7 @@
 			</div>		
 		`;
 
-		page.innerHTML += frame;
-		page.innerHTML += panel;
+		page.innerHTML = frame + panel;
 		return page;
 	}
 
@@ -54,7 +55,7 @@
 
 			// alternate iframe and panel positions
 			if (i % 2 == 1) {
-				const frame = page.querySelector("iframe");
+				const frame = page.querySelector(".project");
 				page.appendChild(frame);
 			}
 

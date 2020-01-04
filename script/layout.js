@@ -1,97 +1,7 @@
 (function() {
-	// Enable/disable selectEl options at resize boundry
-	function toggleDisabledLayoutOptions(selectEl, doDisable) {
-		const option1 = selectEl.querySelector('option[value="1"]');
-		const option2 = selectEl.querySelector('option[value="2"]');
-		if (doDisable) {
-			option1.setAttribute("disabled", true);
-			option2.setAttribute("disabled", true);
-		} else {
-			// setAttribute('disabled', false) doesn't work
-			option1.removeAttribute("disabled");
-			option2.removeAttribute("disabled");
-		}
-	}
+	const BREAKPOINT_WIDTH = 800;
 
-	// ---------------------- Pages ------------------------
-
-	function getPageSizes({ width, height }, layout, config) {
-		let frameWidth, panelWidth;
-		// Full width
-		if (layout === 0) {
-			frameWidth = panelWidth = width;
-		}
-		// Half width
-		else if (layout === 1) {
-			frameWidth = panelWidth = width / 2;
-		}
-		// Narrow width
-		else if (layout === 2) {
-			frameWidth = config.narrow;
-			panelWidth = width - config.narrow;
-		} else new Error("layout type error");
-		return {
-			frameWidth,
-			panelWidth,
-			height: height
-		};
-	}
-
-	function updatePages(container, layout, pageSizes) {
-		const pages = container.querySelectorAll(".page");
-		pages.forEach(page => {
-			if (layout > 0) page.classList.remove("full-width");
-			else page.classList.add("full-width");
-
-			const frame = page.querySelector("iframe");
-			const panel = page.querySelector(".panel");
-
-			frame.width = pageSizes.frameWidth;
-			frame.height = pageSizes.height;
-
-			// Redundant, just use css <-- TODO
-			panel.style.width = pageSizes.panelWidth;
-			panel.style.height = pageSizes.height;
-		});
-	}
-
-	// ---------------------- Header ------------------------
-
-	window.updateHeaderColumWidth = function(header) {
-		const screenIsWide = header.classList.contains("screen-is-wide");
-
-		// Desktop
-		// Middle col contains headline without breaking; side cols fill remaining space
-		if (screenIsWide) {
-			// ensure headline text doesn't break when taking its width
-			header.style.gridTemplateColumns = "0 100% 0";
-
-			const mainBar = header.querySelector(".main-bar");
-			const headerWidth = parseInt(header.offsetWidth);
-			const mainBarWidth = parseInt(mainBar.scrollWidth);
-			const newSideBarWidth = (headerWidth - mainBarWidth) / 2;
-
-			// Some padding seems needed to keep mainBar in one line when resizing window rapidly
-			const colSide = `${newSideBarWidth - 2}px`;
-			const colMiddle = `${mainBarWidth + 4}px`;
-			header.style.gridTemplateColumns =
-				colSide + " " + colMiddle + " " + colSide;
-		}
-		// Mobile
-		else {
-			header.style.gridTemplateColumns = "100% 100% 100%";
-		}
-	};
-
-	// depends on screen with; disregards userLayout
-	function updateHeaderLayout(header, screenIsWide) {
-		// header {width: 100%}
-		if (screenIsWide) header.classList.add("screen-is-wide");
-		// header {width: 300%}
-		else header.classList.remove("screen-is-wide");
-	}
-
-	// ---------------------- Get & set ------------------------
+	// ---------------------- Aux ------------------------
 
 	// px -> num
 	function getContainerSize(container) {
@@ -101,40 +11,104 @@
 		};
 	}
 
-	// Turn screenIsWide into newLayout, considering userLayout
-	function getLayout(screenIsWide, userLayout) {
-		if (screenIsWide && userLayout > -1) return userLayout;
-		else return Number(screenIsWide);
-	}
+	// ------------------------ Set layout ----------------------
 
-	function setLayout(containerSize, newLayout, dom, config) {
-		const pageSizes = getPageSizes(containerSize, newLayout, config);
-		updatePages(dom.container, newLayout, pageSizes);
-		toggleHeadlineText(newLayout, dom.header);
-		updateHeaderColumWidth(dom.header);
-	}
+	// Desktop only. Middle col contains headline without breaking; side cols fill remaining space
+	// I coulnd't find a pure CSS solution
+	// screenIsWide logic here becasue fn is also called in scroll.js and screenIsWide variable is defined in the scope of this file
+	window.updateHeaderColumWidth = function(header) {
+		if (screenIsWide) {
+			// ensure headline text doesn't break when taking its width
+			rootVar = document.documentElement.style;
+			rootVar.setProperty("--header-grid", "0 100% 0");
 
-	// Set layout to userLayout
-	window.handleLayoutSelectChange = function(e, layout, config, dom) {
-		const containerSize = getContainerSize(dom.container);
-		layout.userLayout = Number(e.target.value);
-		setLayout(containerSize, layout.userLayout, dom, config);
+			const mainBar = header.querySelector(".main-bar");
+			const headerWidth = parseInt(header.offsetWidth);
+			const mainBarWidth = parseInt(mainBar.scrollWidth);
+			const newSideBarWidth = (headerWidth - mainBarWidth) / 2;
+
+			// Some padding seems needed to keep mainBar from breaking when resizing window rapidly
+			const colSide = `${newSideBarWidth - 2}px`;
+			const colMiddle = `${mainBarWidth + 4}px`;
+			newGrid = colSide + " " + colMiddle + " " + colSide;
+			rootVar.setProperty("--header-grid", newGrid);
+		}
 	};
 
-	// On resize | initApp()
-	window.updateLayout = function({ screenIsWide, userLayout }, config, dom) {
-		const containerSize = getContainerSize(dom.container);
-		let newScreenIsWide = containerSize.width >= config.threshold;
+	function updatePages(pages) {
+		pages.forEach(page => {
+			const wrapper = page.querySelector(".project");
+			const frame = page.querySelector("iframe");
+			const wrapperSize = getContainerSize(wrapper);
 
-		// At resize boundry | initApp()
-		if (newScreenIsWide !== screenIsWide) {
-			screenIsWide = newScreenIsWide;
-			toggleDisabledLayoutOptions(dom.layoutSelect, !screenIsWide);
-			updateHeaderLayout(dom.header, screenIsWide);
+			frame.width = wrapperSize.width;
+			frame.height = wrapperSize.height;
+		});
+	}
+
+	function setLayout(pages, newLayout, dom) {
+		if (newLayout === 0) d.bc.add("full-width");
+		else d.bc.remove("full-width");
+
+		updatePages(pages);
+		toggleHeadlineText(newLayout, dom.header);
+		updateHeaderColumWidth(dom.header, !newLayout);
+	}
+
+	// -------------------- resize | initApp() -------------------------
+
+	// Update form value and disable options
+	function updateLayoutSelectForm(screenIsWide, newLayout) {
+		const selectEl = document.getElementById("layout-select");
+		const option1 = selectEl.querySelector('option[value="1"]');
+		const option2 = selectEl.querySelector('option[value="2"]');
+
+		selectEl.value = newLayout;
+
+		// Disable layout options 1 & 2 in narrow screen
+		if (!screenIsWide) {
+			option1.setAttribute("disabled", true);
+			option2.setAttribute("disabled", true);
+		} else {
+			// setAttribute('disabled', false) doesn't work
+			option1.removeAttribute("disabled");
+			option2.removeAttribute("disabled");
 		}
+	}
 
-		const newLayout = getLayout(screenIsWide, userLayout);
-		dom.layoutSelect.value = newLayout;
-		setLayout(containerSize, newLayout, dom, config);
+	window.isScreenAboveThreshold = function(dom) {
+		const containerSize = getContainerSize(dom.container);
+		return containerSize.width >= BREAKPOINT_WIDTH;
+	};
+
+	// = isScreenAboveThreshold() prior to / after resize
+	let screenWasWide;
+	let screenIsWide;
+
+	// On resize
+	window.updateLayout = function(pages, dom) {
+		screenIsWide = isScreenAboveThreshold(dom);
+		const userLayout = d.bd.userLayout;
+		const newLayout =
+			screenIsWide && Number(userLayout) > -1
+				? Number(userLayout)
+				: Number(screenIsWide);
+
+		setLayout(pages, newLayout, dom);
+
+		// At resize breakpoint
+		if (screenIsWide !== screenWasWide) {
+			screenWasWide = screenIsWide;
+			updateLayoutSelectForm(screenIsWide, newLayout);
+		}
+	};
+
+	// ---------------------- UI select layout -------------------------
+
+	// Set layout to user-selected layout
+	window.handleLayoutSelectChange = function(e, pages, dom) {
+		userLayout = Number(e.target.value);
+		document.body.dataset.userLayout = userLayout;
+		setLayout(pages, userLayout, dom);
 	};
 })();

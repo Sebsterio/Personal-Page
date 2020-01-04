@@ -12,39 +12,39 @@ function updateHeadline(whichHeadline, source, header) {
 	updateHeaderColumWidth(header); // Update to match new text
 }
 
-// Move header sideways on button click
+// Move header sideways
 function shiftHeader(header, btn) {
 	header.dataset.position = btn.dataset.direction;
 }
 
 // ad UI event listeners
-function setUpUI(pages, layout, dom) {
+function setUpUI(pages, dom) {
 	// Window resize (includes orientationchange)
 	window.addEventListener("resize", () => {
-		updateLayout(layout, config, dom);
+		updateLayout(pages, dom);
 	});
 
-	// Header buttons - shift header sideways on icon click (full-width view)
+	// Header buttons click - shift header sideways on icon click (full-width view)
 	const buttons = dom.header.querySelectorAll(".header-btn");
 	buttons.forEach(btn => {
 		btn.addEventListener("click", () => shiftHeader(dom.header, btn));
 	});
 
-	// Nav bar - change catalog
+	// Nav btn click - change catalog
 	const navLinks = dom.header.querySelectorAll(".nav-btn");
 	navLinks.forEach(link => {
 		link.addEventListener("click", () => {
 			const catalog = Library[link.dataset.catalog];
-			loadCatalog(catalog, pages, layout, dom);
+			loadCatalog(catalog, pages, dom);
 		});
 	});
 
-	// Main bar - toggle panel (full-width only)
+	// Main bar click - toggle panel (full-width only)
 	const bar = dom.header.querySelector(".main-bar");
 	bar.addEventListener("click", () => togglePanel(dom.layoutSelect, null));
 
-	// Options bar - change layout
+	// Options bar click - change layout
 	dom.layoutSelect.addEventListener("change", e => {
-		handleLayoutSelectChange(e, layout, config, dom);
+		handleLayoutSelectChange(e, pages, dom);
 	});
 }

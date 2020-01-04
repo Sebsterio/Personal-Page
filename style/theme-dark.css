@@ -61,12 +61,14 @@
 
 /* --------------- Main bar --------------- */
 
-/* side-col buttons appear to merge into middle col when scrolled-x */
-header.screen-is-wide .header-col-middle {
-	box-shadow: var(--bulge);
-	border-radius: 6px / calc(var(--header-height) / 2);
-	/* hide weird glare on bottom edge */
-	height: calc(var(--header-height) - 2px);
+@media (min-width: 800px) {
+	/* side-col buttons appear to merge into middle col when scrolled-x */
+	.header-col-middle {
+		box-shadow: var(--bulge);
+		border-radius: 6px / calc(var(--header-height) / 2);
+		/* hide weird glare on bottom edge */
+		height: calc(var(--header-height) - 2px);
+	}
 }
 
 .headline h1 {
@@ -149,4 +151,13 @@ select option:checked {
 	color: white;
 	text-shadow: 0 0 60px white, 0 0 4px black;
 	background-color: black;
+}
+
+.panel h1 {
+	font-size: 3em;
+	font-weight: 400;
+}
+
+.panel p {
+	font-size: 1.5em;
 }

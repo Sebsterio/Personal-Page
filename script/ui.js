@@ -1,9 +1,3 @@
-// Switch between showing project name and catalog name in headline
-function toggleHeadlineText(layout, header) {
-	if (layout === 0) header.classList.add("show-project-name");
-	else header.classList.remove("show-project-name");
-}
-
 // Update headline text with project/catalog name
 function updateHeadline(whichHeadline, source, header) {
 	let headline = header.querySelector(`.headline-${whichHeadline}-name`);

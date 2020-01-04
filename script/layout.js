@@ -1,17 +1,27 @@
 (function() {
+	// Screen width at which split-view layout becomes available
 	const BREAKPOINT_WIDTH = 800;
 
-	// ---------------------- Aux ------------------------
-
-	// px -> num
-	function getContainerSize(container) {
-		return {
-			width: parseInt(getComputedStyle(container).width),
-			height: parseInt(getComputedStyle(container).height)
-		};
-	}
+	// = isScreenAboveThreshold() prior to / after resize
+	let screenWasWide;
+	let screenIsWide;
 
 	// ------------------------ Set layout ----------------------
+
+	function updatePages(pages) {
+		pages.forEach(page => {
+			const wrapper = page.querySelector(".project");
+			const frame = page.querySelector("iframe");
+			frame.width = parseInt(getComputedStyle(wrapper).width);
+			frame.height = parseInt(getComputedStyle(wrapper).height);
+		});
+	}
+
+	// Switch between showing project name and catalog name in headline
+	function toggleHeadlineText(layout, header) {
+		if (layout === 0) header.classList.add("show-project-name");
+		else header.classList.remove("show-project-name");
+	}
 
 	// Desktop only. Middle col contains headline without breaking; side cols fill remaining space
 	// I coulnd't find a pure CSS solution
@@ -35,17 +45,6 @@
 		}
 	};
 
-	function updatePages(pages) {
-		pages.forEach(page => {
-			const wrapper = page.querySelector(".project");
-			const frame = page.querySelector("iframe");
-			const wrapperSize = getContainerSize(wrapper);
-
-			frame.width = wrapperSize.width;
-			frame.height = wrapperSize.height;
-		});
-	}
-
 	function setLayout(pages, newLayout, dom) {
 		if (newLayout === 0) d.bc.add("full-width");
 		else d.bc.remove("full-width");
@@ -60,12 +59,11 @@
 	// Update form value and disable options
 	function updateLayoutSelectForm(screenIsWide, newLayout) {
 		const selectEl = document.getElementById("layout-select");
-		const option1 = selectEl.querySelector('option[value="1"]');
-		const option2 = selectEl.querySelector('option[value="2"]');
-
 		selectEl.value = newLayout;
 
 		// Disable layout options 1 & 2 in narrow screen
+		const option1 = selectEl.querySelector('option[value="1"]');
+		const option2 = selectEl.querySelector('option[value="2"]');
 		if (!screenIsWide) {
 			option1.setAttribute("disabled", true);
 			option2.setAttribute("disabled", true);
@@ -77,13 +75,9 @@
 	}
 
 	window.isScreenAboveThreshold = function(dom) {
-		const containerSize = getContainerSize(dom.container);
-		return containerSize.width >= BREAKPOINT_WIDTH;
+		const containerWidth = parseInt(getComputedStyle(dom.container).width);
+		return containerWidth >= BREAKPOINT_WIDTH;
 	};
-
-	// = isScreenAboveThreshold() prior to / after resize
-	let screenWasWide;
-	let screenIsWide;
 
 	// On resize
 	window.updateLayout = function(pages, dom) {

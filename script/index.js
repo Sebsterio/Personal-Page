@@ -1,7 +1,13 @@
 const d = document;
 d.bc = d.body.classList;
 d.bd = d.body.dataset;
-d.bs = d.body.style;
+// d.ds = d.documentElement.style;
+
+// const dom = {
+// 	container: document.getElementById("main-content"),
+// 	header: document.getElementById("header"),
+// 	layoutSelect: document.getElementById("layout-select")
+// };
 
 // Populate #main-content with projects and set up UI
 function loadCatalog(catalog, pages, dom) {

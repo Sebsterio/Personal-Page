@@ -119,13 +119,13 @@ Horizontal padding & horizontally scrolled content
 
 /* --------------- Headline --------------- */
 
-/* In full-width view, hide Site Name */
-header.show-project-name .headline-catalog-name {
+/* In full-width view, hide Catalog Name */
+body.full-width .headline-catalog-name {
 	display: none;
 }
 
 /* In split-width view, hide Project Name */
-header:not(.show-project-name) .headline-project-name {
+body:not(.full-width) .headline-project-name {
 	display: none;
 }
 

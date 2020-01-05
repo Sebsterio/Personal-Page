@@ -3,12 +3,6 @@ d.bc = d.body.classList;
 d.bd = d.body.dataset;
 // d.ds = d.documentElement.style;
 
-// const dom = {
-// 	container: document.getElementById("main-content"),
-// 	header: document.getElementById("header"),
-// 	layoutSelect: document.getElementById("layout-select")
-// };
-
 // Populate #main-content with projects and set up UI
 function loadCatalog(catalog, pages, dom) {
 	dom.container.innerHTML = "<h2>Loading content...</h2>";
@@ -16,7 +10,7 @@ function loadCatalog(catalog, pages, dom) {
 	pages.push(...getPages(catalog[1]));
 	renderPages(pages, dom.container);
 	setUpPanels(pages, dom.layoutSelect);
-	updateLayout(pages, dom);
+	updateLayout(pages);
 	loadFirstFrames(pages);
 	updateHeadline("catalog", catalog[0], dom.header);
 	updateHeadline("project", pages[0], dom.header);

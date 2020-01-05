@@ -1,5 +1,10 @@
 (function() {
-	// ------------------- transitionend ---------------------
+	// Retrieve page with a given zIndex
+	function getPage(pages, zIndex) {
+		return pages.filter(page => {
+			return Number(page.style.zIndex) === zIndex;
+		})[0];
+	}
 
 	// Let iframe GET its content
 	function loadFrame(pages, z) {
@@ -9,6 +14,16 @@
 			frame.src = frame.dataset.src;
 		}
 	}
+
+	// load content in top page and adjacent ones
+	window.loadFirstFrames = function(pages) {
+		loadFrame(pages, pages.length);
+		if (pages.length === 1) return;
+		loadFrame(pages, pages.length - 1);
+		loadFrame(pages, 1);
+	};
+
+	// --------------------- Scroll page ----------------------
 
 	// Increment zIndex of all pages and loop at both ends of stack
 	function shiftPages(pages, increment) {
@@ -36,22 +51,14 @@
 			panel.classList.remove("expanded");
 
 			shiftPages(pages, increment);
+			//activatePanel()
 
-			// load iframe content in upcoming page
+			// Load iframe content in upcoming page
 			if (increment) loadFrame(pages, pages.length - 1);
 			else loadFrame(pages, 1);
 
 			scrollPage.ready = true;
 		}
-	}
-
-	// --------------------- Scroll page ----------------------
-
-	// Retrieve page with a given zIndex
-	function getPage(pages, zIndex) {
-		return pages.filter(page => {
-			return Number(page.style.zIndex) === zIndex;
-		})[0];
 	}
 
 	function scrollPage(pages, dom, increment) {
@@ -71,7 +78,7 @@
 		// Close current page
 		const currentPage = getPage(pages, pages.length);
 		currentPage.classList.add("closing");
-		// -> continued in handlePageTransitionEnd()
+		// -> Continued in handlePageTransitionEnd()
 	}
 
 	// Debounce scroll
@@ -84,7 +91,6 @@
 
 	let touchstartY = 0;
 
-	// Note where where swipe gesture began
 	function handleTouchStart(e) {
 		touchstartY = e.touches[0].pageY;
 	}
@@ -99,11 +105,11 @@
 
 		// Swiped from header down
 		if (!startedOnContainer && endedOnContainer) {
-			togglePanel(dom.layoutSelect, true);
+			togglePanel(true);
 		}
 		// Swiped from container to header
 		else if (startedOnContainer && !endedOnContainer) {
-			togglePanel(dom.layoutSelect, false);
+			togglePanel(false);
 		}
 		// Swiped within container
 		else if (startedOnContainer && endedOnContainer) {
@@ -128,14 +134,6 @@
 		if (e.data === "down") scrollPage(pages, dom, 1);
 		else if (e.data === "up") scrollPage(pages, dom, 0);
 	}
-
-	// load content in top page and adjacent ones
-	window.loadFirstFrames = function(pages) {
-		loadFrame(pages, pages.length);
-		if (pages.length === 1) return;
-		loadFrame(pages, pages.length - 1);
-		loadFrame(pages, 1);
-	};
 
 	// Add scroll-related event listeners
 	window.setUpScroll = function(pages, dom) {

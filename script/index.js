@@ -1,11 +1,16 @@
 const d = document;
 d.bc = d.body.classList;
 d.bd = d.body.dataset;
-// d.ds = d.documentElement.style;
+// d.ds = d.documentElement.style;#
+
+// container = document.getElementById("main-content");
+// header = document.getElementById("header");
+// layoutSelect = document.getElementById("layout-select");
 
 // Populate #main-content with projects and set up UI
 function loadCatalog(catalog, pages, dom) {
-	dom.container.innerHTML = "<h2>Loading content...</h2>";
+	container = document.getElementById("main-content");
+	container.innerHTML = "<h2>Loading content...</h2>";
 	pages.length = 0; // valid & safe
 	pages.push(...getPages(catalog[1]));
 	renderPages(pages, dom.container);

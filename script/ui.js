@@ -6,6 +6,16 @@ function updateHeadline(whichHeadline, source, header) {
 	updateHeaderColumWidth(header); // Update to match new text
 }
 
+function handleCustomWidthInput(input, pages, ready) {
+	if (!ready) return;
+	const root = document.documentElement.style;
+	const inputLabel = document.getElementById("custom-width-label");
+	inputLabel.innerText = input.value + "px";
+	root.setProperty("--custom-width", input.value + "px");
+	updateFrameSize(pages); // frame.width = frameContainer.width
+	// input.setAttribute("value", input.value);
+}
+
 //
 //
 // add UI event listeners
@@ -35,29 +45,27 @@ function setUpUI(pages, dom) {
 
 	// Main bar click - toggle panel (full-width only)
 	const bar = dom.header.querySelector(".main-bar");
-	bar.addEventListener("click", () => togglePanel(dom.layoutSelect, null));
+	bar.addEventListener("click", () => togglePanel(null));
 
 	// Options bar click - change layout
 	dom.layoutSelect.addEventListener("change", e => {
 		handleLayoutSelectChange(e, pages);
 	});
 
-	// Custom width slider - change iframe width
+	// Custom-width slider - change iframe width
 	const input = document.getElementById("custom-width");
-	const inputLabel = document.getElementById("custom-width-label");
-	root = document.documentElement.style;
-
 	inputReady = false;
 	input.addEventListener("mousedown", () => (inputReady = true));
 	input.addEventListener("mouseup", () => (inputReady = false));
-	input.addEventListener("mousemove", () => {
-		if (!inputReady) return;
-		// input.setAttribute("value", input.value);
-		inputLabel.innerText = input.value + "px";
-		root.setProperty("--custom-width", input.value + "px");
-		updateFrameSize(pages); // frame.width = frameContainer.width
-	});
-
+	input.addEventListener("mousemove", () =>
+		handleCustomWidthInput(input, pages, inputReady)
+	);
+	input.addEventListener("touchmove", () =>
+		handleCustomWidthInput(input, pages, true)
+	);
+	input.addEventListener("change", () =>
+		handleCustomWidthInput(input, pages, true)
+	);
 	// on initApp()
-	inputLabel.innerText = input.value + "px";
+	handleCustomWidthInput(input, pages, true);
 }

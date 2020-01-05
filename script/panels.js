@@ -33,7 +33,7 @@
 	}
 
 	function switchPanel(panel, activate) {
-		//if (!body.classList.container('full-width')) return
+		//const panel = document.querySelector(".page:not(.disabled) .panel");
 		if (activate) {
 			panel.classList.add("expanding");
 			panel.classList.add("hover");
@@ -61,19 +61,22 @@
 
 	// Toggle panel visiblity in full-width layout
 	// doShow param used by functions that only either show or hide it
-	window.togglePanel = function(layoutSelect, doShow) {
-		//console.log(doShow);
-		if (layoutSelect.value === "0") {
-			const panel = document.querySelector(".page:not(.disabled) .panel");
-			if (panel.classList.contains("visible" || doShow)) {
-				panel.classList.remove("visible");
-				// -> .on-top removed in handleTransitionEnd()
-			} else if (!panel.classList.contains("visible" || doShow === false)) {
-				panel.classList.add("on-top");
-				panel.classList.add("visible");
-				panel.classList.add("expanding");
-				panel.classList.add("hover");
-			}
+	window.togglePanel = function(doShow) {
+		const layoutSelect = document.getElementById("layout-select");
+		if (layoutSelect.value !== "0") return;
+		const panel = document.querySelector(".page:not(.disabled) .panel");
+
+		// Hide panel
+		if (doShow !== true && panel.classList.contains("visible")) {
+			panel.classList.remove("visible");
+			// -> .on-top removed in handleTransitionEnd()
+		}
+		// Show panel
+		else if (doShow !== false && !panel.classList.contains("visible")) {
+			panel.classList.add("on-top");
+			panel.classList.add("visible");
+			panel.classList.add("expanding");
+			panel.classList.add("hover");
 		}
 	};
 

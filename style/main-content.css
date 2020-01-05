@@ -1,3 +1,8 @@
+:root {
+	/* set with JS */
+	--custom-width: 400px;
+}
+
 #main-content,
 .page {
 	position: absolute;
@@ -74,7 +79,17 @@ iframe {
 	justify-content: center;
 }
 
-/* ----- Full-width view (desktop & mobile) ----- */
+/* ----- Custom-width view (desktop only) ----- */
+
+body.custom-width .project {
+	flex: 0 0 var(--custom-width);
+}
+
+body.custom-width .panel {
+	flex: 1 0 0;
+}
+
+/* ----- Full-width view (desktop / mobile) ----- */
 
 body.full-width .project,
 body.full-width .panel {

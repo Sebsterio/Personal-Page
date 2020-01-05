@@ -6,12 +6,9 @@ function updateHeadline(whichHeadline, source, header) {
 	updateHeaderColumWidth(header); // Update to match new text
 }
 
-// Move header sideways
-function shiftHeader(header, btn) {
-	header.dataset.position = btn.dataset.direction;
-}
-
-// ad UI event listeners
+//
+//
+// add UI event listeners
 function setUpUI(pages, dom) {
 	// Window resize (includes orientationchange)
 	window.addEventListener("resize", () => {
@@ -21,7 +18,10 @@ function setUpUI(pages, dom) {
 	// Header buttons click - shift header sideways on icon click (full-width view)
 	const buttons = dom.header.querySelectorAll(".header-btn");
 	buttons.forEach(btn => {
-		btn.addEventListener("click", () => shiftHeader(dom.header, btn));
+		btn.addEventListener(
+			"click",
+			() => (dom.header.dataset.position = btn.dataset.direction)
+		);
 	});
 
 	// Nav btn click - change catalog
@@ -39,6 +39,25 @@ function setUpUI(pages, dom) {
 
 	// Options bar click - change layout
 	dom.layoutSelect.addEventListener("change", e => {
-		handleLayoutSelectChange(e, pages, dom);
+		handleLayoutSelectChange(e, pages);
 	});
+
+	// Custom width slider - change iframe width
+	const input = document.getElementById("custom-width");
+	const inputLabel = document.getElementById("custom-width-label");
+	root = document.documentElement.style;
+
+	inputReady = false;
+	input.addEventListener("mousedown", () => (inputReady = true));
+	input.addEventListener("mouseup", () => (inputReady = false));
+	input.addEventListener("mousemove", () => {
+		if (!inputReady) return;
+		// input.setAttribute("value", input.value);
+		inputLabel.innerText = input.value + "px";
+		root.setProperty("--custom-width", input.value + "px");
+		updateFrameSize(pages); // frame.width = frameContainer.width
+	});
+
+	// on initApp()
+	inputLabel.innerText = input.value + "px";
 }

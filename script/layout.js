@@ -9,14 +9,14 @@
 	// ------------------------ Set layout ----------------------
 
 	// Update iframe sizes to match their container (no CSS solution found)
-	function updateFrameSize(pages) {
+	window.updateFrameSize = function(pages) {
 		pages.forEach(page => {
 			const wrapper = page.querySelector(".project");
 			const frame = page.querySelector("iframe");
 			frame.width = parseInt(getComputedStyle(wrapper).width);
 			frame.height = parseInt(getComputedStyle(wrapper).height);
 		});
-	}
+	};
 
 	// Update Header grid layout in media query (width > 800)
 	// Middle col contains headline without breaking; side cols fill remaining space (I coulnd't find a pure CSS solution)
@@ -24,9 +24,9 @@
 		// screenIsWide logic here becasue fn is also called in scroll.js and screenIsWide variable is defined in the scope of this file
 		if (!screenIsWide) return;
 
-		// ensure headline text doesn't break when getting its width
-		rootVar = document.documentElement.style;
-		rootVar.setProperty("--header-grid", "0 100% 0");
+		// Ensure headline text isn't breaking when getting its width
+		const root = document.documentElement.style;
+		root.setProperty("--header-grid", "0 100% 0");
 
 		const header = document.getElementById("header");
 		const mainBar = header.querySelector(".main-bar");
@@ -37,14 +37,18 @@
 		// Some padding seems needed to keep mainBar from breaking when resizing window rapidly
 		const colSide = `${newSideBarWidth - 2}px`;
 		const colMiddle = `${mainBarWidth + 4}px`;
-		newGrid = colSide + " " + colMiddle + " " + colSide;
-		rootVar.setProperty("--header-grid", newGrid);
+		const newGrid = colSide + " " + colMiddle + " " + colSide;
+		root.setProperty("--header-grid", newGrid);
 	};
 
-	// Update elements
+	// Update body classes and element sizes
 	function setLayout(pages, newLayout) {
 		if (newLayout === 0) document.body.classList.add("full-width");
 		else document.body.classList.remove("full-width");
+
+		if (newLayout === 2) document.body.classList.add("custom-width");
+		else document.body.classList.remove("custom-width");
+
 		updateFrameSize(pages);
 		updateHeaderColumWidth(!newLayout);
 	}
@@ -77,6 +81,10 @@
 				: Number(screenIsWide);
 
 		setLayout(pages, newLayout);
+
+		// Update max custom width
+		const input = document.getElementById("custom-width");
+		input.setAttribute("max", containerWidth);
 
 		// At resize breakpoint
 		if (screenIsWide !== screenWasWide) {

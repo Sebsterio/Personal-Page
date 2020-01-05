@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -93,11 +94,18 @@
 
 				<div class="header-section-wrapper">
 					<div class="header-section header-bar options-bar">
+						<div class="header-tile custom-width">
+							<label for="custom-width" id="custom-width-label"></label>
+						</div>
+						<div class="header-tile custom-width">
+							<input id="custom-width" name="custom-width" type="range" value="400" min="400" max="800"
+								step="1">
+						</div>
 						<div class="header-tile">
 							<select name="layout" id="layout-select">
 								<option value="0">Full Width</option>
 								<option value="1">Half Width</option>
-								<option value="2">Narrow Width</option>
+								<option value="2">Custom Width</option>
 							</select>
 						</div>
 					</div>

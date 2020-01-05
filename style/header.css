@@ -133,6 +133,12 @@ body:not(.full-width) .headline-project-name {
 	text-align: center;
 }
 
+/* --------------- Options --------------- */
+
+body:not(.custom-width) .custom-width {
+	display: none;
+}
+
 /* --------------- ------------ --------------- */
 
 @media (min-width: 800px) {

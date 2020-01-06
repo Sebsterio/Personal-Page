@@ -1,5 +1,5 @@
 (function() {
-	// -------------------- init catalog ---------------------
+	// -------------------- Init catalog ---------------------
 
 	// Retrieve page with a given zIndex
 	function getPage(pages, zIndex) {
@@ -38,6 +38,10 @@
 		loadFirstFrames(pages);
 		updateHeadline("catalog", catalog[0]);
 		updateHeadline("project", pages[0]);
+
+		//// if layout !== 0
+		// const desc = document.querySelector(".page:not(.disabled) .description");
+		// toggleDescription(desc, true);
 	};
 
 	// --------------------- Scroll page ----------------------
@@ -59,16 +63,15 @@
 			e.target.classList.contains("closing")
 		) {
 			// Reset recently closed page
+			const panel = e.target.querySelector(".panel");
+			const desc = e.target.querySelector(".description");
 			e.target.classList.add("disabled");
 			e.target.classList.remove("closing");
-			const panel = e.target.querySelector(".panel");
 			panel.classList.remove("on-top");
 			panel.classList.remove("visible");
-			panel.classList.remove("hover");
-			panel.classList.remove("expanded");
+			toggleDescription(desc, false);
 
 			shiftPages(pages, increment);
-			//activatePanel()
 
 			// Load iframe content in upcoming page
 			if (increment) loadFrame(pages, pages.length - 1);
@@ -85,11 +88,10 @@
 		scrollPage.ready = false;
 		scrollPage.increment = increment;
 
-		// Enable next/prev page
+		// Enable next page
 		const nextPageZIndex = increment ? pages.length - 1 : 1;
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
-
 		updateHeadline("project", nextPage);
 
 		// Close current page
@@ -101,7 +103,7 @@
 	// Debounce scroll
 	scrollPage.ready = true;
 
-	// -------------------- set up scroll ---------------------
+	// -------------------- Set up scroll ---------------------
 
 	const SWIPE_SENSITIVITY = 15;
 	const SCROLL_SENSITIVITY = 80;

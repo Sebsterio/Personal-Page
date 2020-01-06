@@ -23,14 +23,16 @@
 		// .panel-p-main is targeted by transitionend listener to avoid firing multiple times when there are several .panel-p elements
 		const panel = `
 			<div class="panel">
-				<div class="panel-title">
-					<h1>${project.name}</h1>
-				</div>
-				<div class="panel-p panel-p-main slide-in-right">
-					<p>Lorem ipsum cupiditate, corporis a qui libero ipsum delectus quidem dolor at nulla, adipisci veniam in reiciendis aut asperiores omnis blanditiis quod quas laborum nam! Fuga ad tempora in aspernatur pariatur fugit quibusdam dolores sunt esse magni, ut, dignissimos.</p>
-				</div>
-				<div class="panel-p slide-in-left">
-					<p>#Lorem #ipsum #cupiditate</p>
+				<div class="description">
+					<div class="description-title">
+						<h1>${project.name}</h1>
+					</div>
+					<div class="description-p description-p-main slide-in-right">
+						<p>Lorem ipsum cupiditate, corporis a qui libero ipsum delectus quidem dolor at nulla, adipisci veniam in reiciendis aut asperiores omnis blanditiis quod quas laborum nam! Fuga ad tempora in aspernatur pariatur fugit quibusdam dolores sunt esse magni, ut, dignissimos.</p>
+					</div>
+					<div class="description-p slide-in-left">
+						<p>#Lorem #ipsum #cupiditate</p>
+					</div>
 				</div>
 			</div>		
 		`;

@@ -1,0 +1,58 @@
+/* Toggle details on panel hover (split-width) and toggle (full-width) */
+
+.description {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	text-align: center;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+}
+
+.description > div {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	transition: all 250ms;
+}
+
+/* hover */
+
+.description-title {
+	flex: 1 0 100%;
+}
+
+.description.hover .description-title {
+	flex: 1 1 auto;
+}
+
+.description-p {
+	height: 0;
+	flex: 0 1 auto;
+}
+
+.description.hover .description-p {
+	flex: 2 1 auto;
+}
+
+/* slide-in */
+
+.description .slide-in-right {
+	transform: translateX(-100%);
+	opacity: 0;
+}
+
+.description .slide-in-left {
+	transform: translateX(100%);
+	opacity: 0;
+}
+
+.description.expanded .slide-in-right,
+.description.expanded .slide-in-left {
+	transform: translateX(0);
+	opacity: 1;
+}

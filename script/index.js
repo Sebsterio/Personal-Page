@@ -16,9 +16,9 @@ function loadCatalog(catalog, pages, dom) {
 
 	pages.push(...getPages(catalog[1]));
 	renderPages(pages, dom.container);
-	setUpPanels(pages);
 	updateLayout(pages);
 	initPageScroll(pages, catalog);
+	setUplDescriptionHover();
 }
 
 (function initApp() {
@@ -34,6 +34,7 @@ function loadCatalog(catalog, pages, dom) {
 
 	let pages = [];
 
+	setUpPanels(pages);
 	setUpPageScroll(pages, dom);
 	setUpHeaderButtons();
 	setupLayout(pages);

@@ -66,17 +66,10 @@ iframe {
 }
 
 .panel {
+	position: relative;
 	overflow: hidden;
-
-	/* Panel toggle */
 	opacity: 1;
 	transition: transform 300ms;
-
-	/* Panel hover */
-	text-align: center;
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: center;
 }
 
 /* ----- Custom-width view (desktop only) ----- */
@@ -119,54 +112,4 @@ body.full-width .panel.on-top {
 body.full-width .panel.visible {
 	/* opacity: 1; */
 	transform: translateY(0);
-}
-
-/*******************************************
-                PANEL CONTENT
- *******************************************/
-
-/* Toggle details on panel hover (split-width) and toggle (full-width) */
-
-.panel > div {
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: center;
-	transition: all 250ms;
-}
-
-/* hover */
-
-.panel-title {
-	flex: 1 0 100%;
-}
-
-.panel.hover .panel-title {
-	flex: 1 1 auto;
-}
-
-.panel-p {
-	height: 0;
-	flex: 0 1 auto;
-}
-
-.panel.hover .panel-p {
-	flex: 2 1 auto;
-}
-
-/* slide-in */
-
-.panel .slide-in-right {
-	transform: translateX(-100%);
-	opacity: 0;
-}
-
-.panel .slide-in-left {
-	transform: translateX(100%);
-	opacity: 0;
-}
-
-.panel.expanded .slide-in-right,
-.panel.expanded .slide-in-left {
-	transform: translateX(0);
-	opacity: 1;
 }

@@ -2,7 +2,7 @@
 	// Screen width at which split-view layout becomes available
 	const BREAKPOINT_WIDTH = 800;
 
-	// is screen above BREAKPOINT_WIDTH prior to / after resize
+	// is screen above BREAKPOINT_WIDTH at the beginning / end of resize event
 	let screenWasWide;
 	let screenIsWide;
 
@@ -41,7 +41,7 @@
 		root.setProperty("--header-grid", newGrid);
 	};
 
-	// Update body classes and element sizes
+	// Update view
 	function setLayout(pages, newLayout) {
 		if (newLayout === 0) document.body.classList.add("full-width");
 		else document.body.classList.remove("full-width");
@@ -93,12 +93,45 @@
 		}
 	};
 
-	// ---------------------- UI select layout -------------------------
+	// -------------------- Setup -------------------------
 
 	// Set layout to user-selected layout
-	window.handleLayoutSelectChange = function(e, pages) {
+	function handleLayoutSelectChange(e, pages) {
 		userLayout = Number(e.target.value);
 		document.body.dataset.userLayout = userLayout;
 		setLayout(pages, userLayout);
+	}
+
+	// Change iframe width in custom-width view
+	function changeCustomWidth(input, pages, ready) {
+		if (!ready) return;
+		const root = document.documentElement.style;
+		const inputLabel = document.getElementById("custom-width-label");
+		inputLabel.innerText = input.value + "px";
+		root.setProperty("--custom-width", input.value + "px");
+		updateFrameSize(pages); // frame.width = frameContainer.width
+		// input.setAttribute("value", input.value);
+	}
+
+	window.setupLayout = function(pages) {
+		// Window resize (includes orientationchange)
+		window.onresize = () => updateLayout(pages);
+
+		// Layout select form input
+		const layoutSelect = document.getElementById("layout-select");
+		layoutSelect.onchange = e => handleLayoutSelectChange(e, pages);
+
+		// Custom-width slider input
+		const input = document.getElementById("custom-width");
+		inputReady = false;
+		input.onmousedown = () => (inputReady = true);
+		input.onmouseup = () => (inputReady = false);
+		input.onmousemove = () => changeCustomWidth(input, pages, inputReady);
+		input.onchange = () => changeCustomWidth(input, pages, true);
+		input.addEventListener("touchmove", () =>
+			changeCustomWidth(input, pages, true)
+		);
+		// on initApp()
+		changeCustomWidth(input, pages, true);
 	};
 })();

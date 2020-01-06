@@ -46,7 +46,8 @@
 	}
 
 	// Display .panel-p on .panel:hover
-	function addHoverInteractions(panel, layoutSelect) {
+	function addHoverInteractions(panel) {
+		const layoutSelect = document.getElementById("layout-select");
 		panel.addEventListener("mouseenter", () => {
 			if (Number(layoutSelect.value) > 0) {
 				switchPanel(panel, true);
@@ -80,15 +81,20 @@
 		}
 	};
 
-	window.setUpPanels = function(pages, layoutSelect) {
+	window.setUpPanels = function(pages) {
 		pages.forEach(page => {
 			const panel = page.querySelector(".panel");
-			addHoverInteractions(panel, layoutSelect);
+			addHoverInteractions(panel);
 		});
 
-		// Add doc & window listeners only on first load
+		// Add only on first load
 		if (setUpPanels.isDone) return;
 		setUpPanels.isDone = true;
+
+		// Main bar click - toggle panel (full-width only)
+		const bar = document.querySelector(".main-bar");
+		bar.onclick = () => togglePanel(null);
+
 		document.addEventListener("transitionend", handleTransitionEnd);
 	};
 })();

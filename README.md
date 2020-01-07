@@ -5,15 +5,24 @@
 ## Features
 
 - Dynamically loaded content
-- Projects embeded as responsive iframes
-- Custombizable number of projects displayed in viewport
+- Projects embeded as responsive iframes with custom size
 - Custom scroll function - one page at a time
 - Iframes send scroll events to host window (wheel, touch, trackpad)
 - Iframes loads when near viewport (scroll-wise)
 
 ## TODOs
 
-- a lot...
+- Make main scroll explicit
+- Add nav bar icons OR make horizontal scroll functionality explicit
+- Don't hide content under hover OR point to it in a clear way
+
+- Lint
+- Browser compatibility
+- Make home page
+  _ headline: 'Click for info' (maybe...)
+  _ split-view panel title: 'Hover for info' (maybe...)
+- Add project descriptions
+- Add theme(s)
 
 ## Known Issues
 

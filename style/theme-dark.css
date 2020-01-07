@@ -129,6 +129,14 @@
 
 /* --------------- Options bar --------------- */
 
+.options-bar label {
+	margin: 0 12px;
+	padding: 6px 12px;
+	border-radius: 100px;
+	background: white;
+	box-shadow: 0 0 6px white;
+}
+
 header select {
 	display: inline-block;
 	margin: 0 calc(8px + 0.5vmin);
@@ -147,17 +155,17 @@ select option:checked {
 	background-color: white;
 }
 
-.panel {
+.description {
 	color: white;
 	text-shadow: 0 0 60px white, 0 0 4px black;
 	background-color: black;
 }
 
-.panel h1 {
+.description h1 {
 	font-size: 3em;
 	font-weight: 400;
 }
 
-.panel p {
+.description p {
 	font-size: 1.5em;
 }

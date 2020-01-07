@@ -5,22 +5,23 @@
 ## Features
 
 - Dynamically loaded content
-- Projects embeded as responsive iframes with custom size
-- Custom scroll function - one page at a time
+- Projects embeded as responsive, resizeable iframes
+- Custom scroll in Z axis (one page at a time)
 - Iframes send scroll events to host window (wheel, touch, trackpad)
-- Iframes loads when near viewport (scroll-wise)
+- Iframes load only when near top of page stack
 
 ## TODOs
 
-- Make main scroll explicit
-- Add nav bar icons OR make horizontal scroll functionality explicit
+- Make page scrolling functionality explicit
+- Add nav bar icons OR make horizontal scroll explicit
 - Don't hide content under hover OR point to it in a clear way
 
 - Lint
 - Browser compatibility
-- Make home page
-  _ headline: 'Click for info' (maybe...)
-  _ split-view panel title: 'Hover for info' (maybe...)
+- Single button instead of select element for layout selection
+- Home page
+  - Headline: 'Click for info' (maybe...)
+  - Split-view panel title: 'Hover for info' (maybe...)
 - Add project descriptions
 - Add theme(s)
 
@@ -38,4 +39,4 @@ Solutions:
 Solutions:
 
 - reset .panel classes on layout change
-- OR use .page mousemove instead of .panel mouseenter/leave
+- OR use doc:mousemove instead of .panel:mouseenter/leave

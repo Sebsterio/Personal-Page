@@ -138,8 +138,3 @@ body:not(.full-width) .headline-project-name {
 body:not(.custom-width) .custom-width {
 	display: none;
 }
-
-/* --------------- ------------ --------------- */
-
-@media (min-width: 800px) {
-}

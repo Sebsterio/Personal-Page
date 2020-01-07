@@ -20,6 +20,11 @@
 		inset -6px 0 6px 0 var(--shine), inset 6px 0 6px 0 var(--shade);
 }
 
+body {
+	font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+
 .bulge {
 	cursor: pointer;
 	border: none;
@@ -130,6 +135,7 @@
 /* --------------- Options bar --------------- */
 
 .options-bar label {
+	font-family: Gruppo, Arial;
 	margin: 0 12px;
 	padding: 6px 12px;
 	border-radius: 100px;

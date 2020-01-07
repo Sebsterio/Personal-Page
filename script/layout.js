@@ -80,12 +80,15 @@
 				? Number(userLayout)
 				: Number(screenIsWide);
 
-		setLayout(pages, newLayout);
-
 		// Update max custom width
 		const input = document.getElementById("custom-width");
 		input.setAttribute("max", containerWidth);
+		console.log(input.value, containerWidth);
+		if (input.value >= containerWidth) {
+			changeCustomWidth(input, pages, true);
+		}
 
+		setLayout(pages, newLayout);
 		// At resize breakpoint
 		if (screenIsWide !== screenWasWide) {
 			screenWasWide = screenIsWide;

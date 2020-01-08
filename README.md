@@ -12,10 +12,10 @@
 
 ## TODOs
 
+- Find a CSS solution for header positioning (middle col centered and (width: auto); side cols fill remaining space)
+- Add nav bar side scroll arrow icons when overflows
 - Make page scrolling functionality explicit
-- Add nav bar icons OR make horizontal scroll explicit
 - Don't hide content under hover OR point to it in a clear way
-
 - Lint
 - Browser compatibility
 - Single button instead of select element for layout selection
@@ -27,7 +27,7 @@
 
 ## Known Issues
 
-#### On .panel mouseleave, .title elemenet jumps into it's next position instead of transitioning smoothly
+#### On .panel mouseleave, .title element jumps into it's next position instead of transitioning smoothly
 
 Solutions:
 

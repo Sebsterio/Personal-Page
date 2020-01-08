@@ -6,17 +6,7 @@
 	let screenWasWide;
 	let screenIsWide;
 
-	// ------------------------ Set layout ----------------------
-
-	// Update iframe sizes to match their container (no CSS solution found)
-	window.updateFrameSize = function(pages) {
-		pages.forEach(page => {
-			const wrapper = page.querySelector(".project");
-			const frame = page.querySelector("iframe");
-			frame.width = parseInt(getComputedStyle(wrapper).width);
-			frame.height = parseInt(getComputedStyle(wrapper).height);
-		});
-	};
+	// ------------------------ View ----------------------
 
 	// Update Header grid layout in media query (width > 800)
 	// Middle col contains headline without breaking; side cols fill remaining space (I coulnd't find a pure CSS solution)
@@ -42,21 +32,37 @@
 	};
 
 	// Update view
-	function setLayout(pages, newLayout) {
+	function setLayout(newLayout) {
 		if (newLayout === 0) document.body.classList.add("full-width");
 		else document.body.classList.remove("full-width");
 
 		if (newLayout === 2) document.body.classList.add("custom-width");
 		else document.body.classList.remove("custom-width");
 
-		updateFrameSize(pages);
 		updateHeaderColumWidth(!newLayout);
 	}
 
-	// -------------------- resize | initApp() -------------------------
+	// -------------------- Model -------------------------
+
+	// Set layout to user-selected layout
+	function handleLayoutSelectChange(e, pages) {
+		userLayout = Number(e.target.value);
+		document.body.dataset.userLayout = userLayout;
+		setLayout(userLayout);
+	}
+
+	// Change iframe width in custom-width view
+	function changeCustomWidth(input, ready) {
+		if (!ready) return;
+		const root = document.documentElement.style;
+		const inputLabel = document.getElementById("custom-width-label");
+		inputLabel.innerText = input.value + "px";
+		root.setProperty("--custom-width", input.value + "px");
+		// input.setAttribute("value", input.value);
+	}
 
 	function updateLayoutSelectForm(screenIsWide, newLayout) {
-		// Update selected option (i.e. form value)
+		// Update selected option (form value)
 		const selectEl = document.getElementById("layout-select");
 		selectEl.value = newLayout;
 
@@ -69,7 +75,7 @@
 	}
 
 	// On resize | initApp()
-	window.updateLayout = function(pages) {
+	window.updateLayout = function() {
 		const container = document.getElementById("main-content");
 		const containerWidth = parseInt(getComputedStyle(container).width);
 		screenIsWide = containerWidth >= BREAKPOINT_WIDTH;
@@ -80,15 +86,15 @@
 				? Number(userLayout)
 				: Number(screenIsWide);
 
-		// Update max custom width
+		// Update custom width value & max
 		const input = document.getElementById("custom-width");
 		input.setAttribute("max", containerWidth);
-		console.log(input.value, containerWidth);
-		if (input.value >= containerWidth) {
-			changeCustomWidth(input, pages, true);
+		if (screenIsWide && input.value >= containerWidth) {
+			changeCustomWidth(input, true);
 		}
 
-		setLayout(pages, newLayout);
+		setLayout(newLayout);
+
 		// At resize breakpoint
 		if (screenIsWide !== screenWasWide) {
 			screenWasWide = screenIsWide;
@@ -96,29 +102,11 @@
 		}
 	};
 
-	// -------------------- Setup -------------------------
-
-	// Set layout to user-selected layout
-	function handleLayoutSelectChange(e, pages) {
-		userLayout = Number(e.target.value);
-		document.body.dataset.userLayout = userLayout;
-		setLayout(pages, userLayout);
-	}
-
-	// Change iframe width in custom-width view
-	function changeCustomWidth(input, pages, ready) {
-		if (!ready) return;
-		const root = document.documentElement.style;
-		const inputLabel = document.getElementById("custom-width-label");
-		inputLabel.innerText = input.value + "px";
-		root.setProperty("--custom-width", input.value + "px");
-		updateFrameSize(pages); // frame.width = frameContainer.width
-		// input.setAttribute("value", input.value);
-	}
+	// -------------------- Controller -------------------------
 
 	window.setupLayout = function(pages) {
 		// Window resize (includes orientationchange)
-		window.onresize = () => updateLayout(pages);
+		window.onresize = () => updateLayout();
 
 		// Layout select form input
 		const layoutSelect = document.getElementById("layout-select");
@@ -129,12 +117,12 @@
 		inputReady = false;
 		input.onmousedown = () => (inputReady = true);
 		input.onmouseup = () => (inputReady = false);
-		input.onmousemove = () => changeCustomWidth(input, pages, inputReady);
+		input.onmousemove = () => changeCustomWidth(input, inputReady);
 		input.onchange = () => changeCustomWidth(input, pages, true);
 		input.addEventListener("touchmove", () =>
 			changeCustomWidth(input, pages, true)
 		);
 		// on initApp()
-		changeCustomWidth(input, pages, true);
+		changeCustomWidth(input, true);
 	};
 })();

@@ -10,8 +10,8 @@
 			<div class="project">
 				<iframe src="" 
 					data-src="${project.url}" 
-					width="0" 
-					height="0" 
+					width="100%" 
+					height="100%" 
 					frameborder="0"
 				>
 				<!-- fallback -->

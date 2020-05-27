@@ -1,6 +1,7 @@
-(function() {
+(function () {
 	function handlePanelTransitionEnd(e) {
-		// When .panel slid out, move it behind iframe (legacy - originally it faded-out so had to be moved in z axis; keeping the code for now)
+		// When .panel slid out, move it behind iframe
+		// legacy - originally it faded-out so had to be moved in z axis; keeping the code for now)
 		if (
 			e.propertyName == "transform" &&
 			e.target.classList.contains("panel") &&
@@ -14,7 +15,7 @@
 
 	// Toggle panel visiblity in full-width layout
 	// @param doShow - used by functions that only either show or hide it
-	window.togglePanel = function(doShow) {
+	window.togglePanel = function (doShow) {
 		const layoutSelect = document.getElementById("layout-select");
 		if (layoutSelect.value !== "0") return;
 
@@ -34,7 +35,7 @@
 		}
 	};
 
-	window.setUpPanels = function(pages) {
+	window.setUpPanels = function (pages) {
 		// Main bar click - toggle panel (full-width only)
 		document.querySelector(".toggle-panel").onclick = () => togglePanel(null);
 

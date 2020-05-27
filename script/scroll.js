@@ -1,9 +1,9 @@
-(function() {
+(function () {
 	// -------------------- Init catalog ---------------------
 
 	// Retrieve page with a given zIndex
 	function getPage(pages, zIndex) {
-		return pages.filter(page => {
+		return pages.filter((page) => {
 			return Number(page.style.zIndex) === zIndex;
 		})[0];
 	}
@@ -34,7 +34,7 @@
 	}
 
 	// prep new catalog for scroll
-	window.initPageScroll = function(pages, catalog) {
+	window.initPageScroll = function (pages, catalog) {
 		loadFirstFrames(pages);
 		updateHeadline("catalog", catalog[0]);
 		updateHeadline("project", pages[0]);
@@ -48,11 +48,11 @@
 
 	// Increment zIndex of all pages and loop at both ends of stack
 	function shiftPages(pages, increment) {
-		pages.forEach(page => {
+		pages.forEach((page) => {
 			let index = Number(page.style.zIndex);
 			index = index + (increment ? 1 : -1);
 			if (index > pages.length) index = 1;
-			if (index <= 0) index = pages.length;
+			if (index < 1) index = pages.length;
 			page.style.zIndex = index;
 		});
 	}
@@ -93,6 +93,7 @@
 		const nextPage = getPage(pages, nextPageZIndex);
 		nextPage.classList.remove("disabled");
 		updateHeadline("project", nextPage);
+		activateNavItem(nextPage.navRef);
 
 		// Close current page
 		const currentPage = getPage(pages, pages.length);
@@ -157,13 +158,34 @@
 		else if (e.data === "up") scrollPage(pages, 0);
 	}
 
+	function handleNavArrow(pages, arrow) {
+		const increment = Number(arrow.dataset.increment);
+		scrollPage(pages, increment);
+	}
+
+	function handleNavBtn(e, pages) {
+		return;
+		// const target = e.target.dataset.target;
+		// const targetEl = pages.find((page) => page.navRef === e.target);
+		// if (!target || !targetEl) return;
+	}
+
 	// Add scroll-related event listeners
-	window.setUpPageScroll = function(pages) {
+	window.setUpPageScroll = function (pages) {
 		document.addEventListener("touchstart", handleTouchStart);
-		document.addEventListener("touchend", e => handleTouchEnd(e, pages));
-		document.addEventListener("wheel", e => handleWheel(e, pages));
-		window.addEventListener("message", e => handleeMessage(e, pages));
-		document.addEventListener("transitionend", e =>
+		document.addEventListener("touchend", (e) => handleTouchEnd(e, pages));
+		document.addEventListener("wheel", (e) => handleWheel(e, pages));
+		window.addEventListener("message", (e) => handleeMessage(e, pages));
+		document
+			.querySelectorAll(".scroll-arrow")
+			.forEach((arrow) =>
+				arrow.addEventListener("click", () => handleNavArrow(pages, arrow))
+			);
+		document
+			.querySelector(".scroll-nav")
+			.addEventListener("click", (e) => handleNavBtn(e, pages));
+
+		document.addEventListener("transitionend", (e) =>
 			handlePageTransitionEnd(e, pages, scrollPage.increment)
 		);
 	};

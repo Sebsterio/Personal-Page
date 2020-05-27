@@ -1,9 +1,17 @@
-(function() {
+(function () {
+	// Alternate iframe and panel positions
+	let alternatePositions = false;
+
+	const list = document.querySelector(".nav-list");
+
+	// -----------------------------------------------------------------
+
 	// Add project tile to container
 	function getPage(project) {
 		const page = document.createElement("div");
 		page.classList.add("page");
 		page.dataset.projectName = project.name;
+		page.navRef = list.querySelector(`[data-target="${project.name}"`);
 
 		// Save iframe src to be loaded dynamically on scroll
 		const frame = `
@@ -42,23 +50,24 @@
 	}
 
 	// Make an array of .page elements from a list of projects
-	window.getPages = function(catalog) {
-		return catalog.map(project => {
+	window.getPages = function (catalog) {
+		return catalog.map((project) => {
 			return getPage(project);
 		});
 	};
 
 	// Place pages in the container
-	window.renderPages = function(pages, container) {
+	window.renderPages = function (pages, container) {
 		for (i = 0; i < pages.length; i++) {
 			page = pages[i];
 			page.style.zIndex = pages.length - i;
 			if (i !== 0) page.classList.add("disabled");
 
-			// alternate iframe and panel positions
-			if (i % 2 == 1) {
-				const frame = page.querySelector(".project");
-				page.appendChild(frame);
+			if (alternatePositions) {
+				if (i % 2 == 1) {
+					const frame = page.querySelector(".project");
+					page.appendChild(frame);
+				}
 			}
 
 			container.appendChild(page);

@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	// Screen width at which split-view layout becomes available
 	const BREAKPOINT_WIDTH = 800;
 
@@ -6,17 +6,18 @@
 	let screenWasWide;
 	let screenIsWide;
 
+	const rootStyle = document.documentElement.style;
+
 	// ------------------------ View ----------------------
 
 	// Update Header grid layout in media query (width > 800)
 	// Middle col contains headline without breaking; side cols fill remaining space (I coulnd't find a pure CSS solution)
-	window.updateHeaderColumWidth = function() {
+	window.updateHeaderColumWidth = function () {
 		// screenIsWide logic here becasue fn is also called in scroll.js and screenIsWide variable is defined in the scope of this file
 		if (!screenIsWide) return;
 
 		// Ensure headline text isn't breaking when getting its width
-		const root = document.documentElement.style;
-		root.setProperty("--header-grid", "0 100% 0");
+		rootStyle.setProperty("--header-grid", "0 100% 0");
 
 		const header = document.getElementById("header");
 		const mainBar = header.querySelector(".main-bar");
@@ -28,7 +29,7 @@
 		const colSide = `${newSideBarWidth - 2}px`;
 		const colMiddle = `${mainBarWidth + 4}px`;
 		const newGrid = colSide + " " + colMiddle + " " + colSide;
-		root.setProperty("--header-grid", newGrid);
+		rootStyle.setProperty("--header-grid", newGrid);
 	};
 
 	// Update view
@@ -45,7 +46,7 @@
 	// -------------------- Model -------------------------
 
 	// Set layout to user-selected layout
-	function handleLayoutSelectChange(e, pages) {
+	function handleLayoutSelectChange(e) {
 		userLayout = Number(e.target.value);
 		document.body.dataset.userLayout = userLayout;
 		setLayout(userLayout);
@@ -54,10 +55,9 @@
 	// Change iframe width in custom-width view
 	function changeCustomWidth(input, ready) {
 		if (!ready) return;
-		const root = document.documentElement.style;
 		const inputLabel = document.getElementById("custom-width-label");
 		inputLabel.innerText = input.value + "px";
-		root.setProperty("--custom-width", input.value + "px");
+		rootStyle.setProperty("--custom-width", input.value + "px");
 		// input.setAttribute("value", input.value);
 	}
 
@@ -68,14 +68,14 @@
 
 		// Disable options 1 & 2 in narrow screen
 		const options = selectEl.querySelectorAll('option:not([value="0"])');
-		options.forEach(option => {
+		options.forEach((option) => {
 			if (!screenIsWide) option.setAttribute("disabled", true);
 			else option.removeAttribute("disabled");
 		});
 	}
 
 	// On resize | initApp()
-	window.updateLayout = function() {
+	window.updateLayout = function () {
 		const container = document.getElementById("main-content");
 		const containerWidth = parseInt(getComputedStyle(container).width);
 		screenIsWide = containerWidth >= BREAKPOINT_WIDTH;
@@ -104,13 +104,13 @@
 
 	// -------------------- Controller -------------------------
 
-	window.setupLayout = function(pages) {
+	window.setupLayout = function (pages) {
 		// Window resize (includes orientationchange)
 		window.onresize = () => updateLayout();
 
 		// Layout select form input
 		const layoutSelect = document.getElementById("layout-select");
-		layoutSelect.onchange = e => handleLayoutSelectChange(e, pages);
+		layoutSelect.onchange = (e) => handleLayoutSelectChange(e);
 
 		// Custom-width slider input
 		const input = document.getElementById("custom-width");

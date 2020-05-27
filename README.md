@@ -1,28 +1,29 @@
-# Personal Page
+# Widget Viewer
 
 ## WORK IN PROGRESS
 
+I wrote this project when learning to code so it doesn't represent my current skills. Please judge me by more recent projects in my portfolio [www.sebster.dev](https://sebster.dev).
+
+I might revisit this project at some point.
+
 ## Features
 
-- Dynamically loaded content
 - Projects embeded as responsive, resizeable iframes
-- Custom scroll in Z axis (one page at a time)
+- Scroll in Z axis (one page at a time)
 - Iframes send scroll events to host window (wheel, touch, trackpad)
 - Iframes load only when near top of page stack
 
 ## TODOs
 
-- Find a CSS solution for header positioning (middle col centered and (width: auto); side cols fill remaining space)
-- Add nav bar side scroll arrow icons when overflows
-- Make page scrolling functionality explicit
-- Don't hide content under hover OR point to it in a clear way
-- Lint
+- REFACTOR
+- info panel show on click, not hover; persist through viewed projects
+- Get project descriptions (from Readme ?)
+- buttons instead of select element for layout selection
+- header nav: side-scroll on edge hover
+- init with custom-width option selected
+- Optimize
 - Browser compatibility
-- Single button instead of select element for layout selection
-- Home page
-  - Headline: 'Click for info' (maybe...)
-  - Split-view panel title: 'Hover for info' (maybe...)
-- Add project descriptions
+- Z-scroll animation
 - Add theme(s)
 
 ## Known Issues

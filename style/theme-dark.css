@@ -161,7 +161,7 @@ select option:checked {
 	background-color: white;
 }
 
-.description {
+.panel {
 	color: white;
 	text-shadow: 0 0 60px white, 0 0 4px black;
 	background-color: black;
